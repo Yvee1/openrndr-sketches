@@ -47,6 +47,8 @@ val orxFeatures = setOf(
 //  "orx-temporal-blur",
 //  "orx-time-operators",
 //  "orx-kinect-v1",
+    "orx-video-profiles",
+    "orx-temporal-blur",
 
     "orx-panel"
 )
