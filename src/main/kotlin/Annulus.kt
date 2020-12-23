@@ -13,6 +13,7 @@ import org.openrndr.extra.fx.blur.GaussianBloom
 import org.openrndr.extra.fx.shadow.DropShadow
 import org.openrndr.extra.gui.GUI
 import org.openrndr.extra.gui.addTo
+import org.openrndr.extra.noise.filters.SpeckleNoise
 import org.openrndr.extra.olive.Olive
 import org.openrndr.extra.olive.oliveProgram
 import org.openrndr.extra.parameters.*
@@ -20,6 +21,7 @@ import org.openrndr.extra.shadestyles.linearGradient
 import org.openrndr.extra.temporalblur.*
 import org.openrndr.ffmpeg.ScreenRecorder
 import org.openrndr.ffmpeg.VideoWriterProfile
+import org.openrndr.math.IntVector2
 import org.openrndr.math.Polar
 import org.openrndr.math.Vector2
 import org.openrndr.math.Vector2.Companion.fromPolar
@@ -31,18 +33,17 @@ import kotlin.math.*
  *  and https://en.wikipedia.org/wiki/Annulus_(mathematics)#/media/File:Mamikon_annulus_area_visualisation.svg
  */
 
-const val RECORD = true
+const val RECORD = false
 const val GIF = true
 
 fun main() = application {
     configure {
         width = 1000
         height = 1000
+        position = IntVector2(1400, 200)
     }
 
     program {
-        val tex = loadImage("data/images/cheeta.jpg")
-
         val gui = GUI()
 
         val s = object : Animatable() {
@@ -59,7 +60,6 @@ fun main() = application {
             var rotation: Double = 0.0
 
             @ColorParameter("Background")
-//            var bg: ColorRGBa = ColorRGBa(0.33, 0.33, 0.43)
             var bg: ColorRGBa = ColorRGBa(0.95, 0.95, 0.85)
 
             @DoubleParameter("Gain", 0.0, 1.0)
@@ -70,12 +70,12 @@ fun main() = application {
         val center = Vector2(width/2.0, height/2.0)
 
         val shadow = DropShadow()
+        val shadow2 = DropShadow()
         val bloom = GaussianBloom()
 
         val comp = compose {
             layer {
                 draw {
-//                    drawer.clear(ColorRGBa(0.2, 0.2, 0.2))
                     drawer.clear(s.bg)
                 }
             }
@@ -101,26 +101,20 @@ fun main() = application {
 
                         val p1 = Vector2(cos(ca), sin(ca)) * R
                         val p2 = Vector2(cos(na), sin(na)) * R
-                        val p3 = p2.rotate(toDegrees(1.19*alpha)).normalized * r
+                        val p3 = p2.rotate(toDegrees(alpha)).normalized * r
 
                         val c = contour {
                             moveTo(p1)
-                            lineTo(p2)
-                            curveTo((p1+p2)/2.0, p3)
-                            curveTo((p1+p2)/2.0, p1)
+                            curveTo((p1+p2)*(0.5 + 4.5/n.toDouble().pow(2)), p2)
+                            lineTo(p3)
                             close()
                         }
 
                         drawer.stroke = ColorRGBa.BLACK
                         drawer.shadeStyle = linearGradient(ColorRGBa(0.15, 0.15, 0.15), ColorRGBa.GRAY, rotation = toDegrees(ca)+90)
 
-//                        drawer.shadeStyle = shadeStyle {
-//                            fragmentTransform = "x_fill = texture(p_tex, va_texCoord0.xy);"
-//                            parameter("tex", tex)
-//                        }
 //                        drawer.stroke = null
 //                        drawer.fill = ColorXSVa(i.toDouble() / s.segments * 360.0, 0.85, 0.95, 1.0).toRGBa()
-//                        drawer.fill = ColorRGBa.GRAY
                         drawer.contour(c)
                     }
                 }
@@ -128,16 +122,23 @@ fun main() = application {
                 post(shadow).addTo(gui)
             }
 
-//            layer {
-//                draw {
-//
-//                }
-//            }
+            layer {
+                draw {
+                    val annulus = compound {
+                        difference {
+                            shape(Circle(center, s.outerRadius + 100).shape)
+                            shape(Circle(center, s.outerRadius).shape)
+                        }
+                    }
+
+                    drawer.fill = ColorRGBa(0.15, 0.15, 0.15)
+                    drawer.shapes(annulus)
+                }
+                post(shadow2).addTo(gui)
+            }
         }
 
         var rounds = 0
-        var spacing = 50
-        var current = 0
 
         extend(Screenshots()) {
             scale = 1.0
@@ -146,20 +147,20 @@ fun main() = application {
             extend(ScreenRecorder()) {
                 if (GIF) {
                     profile = GIFProfile()
-                    frameRate = 50
+                    frameRate = 45
                 } else {
                     frameRate = 60
                 }
             }
+
+            extend(TemporalBlur()) {
+                duration = 1.5
+                samples = 45
+                fps = 45.0
+                jitter = 1.0
+            }
         } else {
             extend(gui)
-        }
-
-        extend(TemporalBlur()) {
-            duration = 0.5
-            samples = 30
-            fps = 50.0
-            jitter = 1.0
         }
 
         extend {
@@ -185,8 +186,6 @@ fun main() = application {
                         animate("innerRadius", 190.0, 800, Easing.QuartInOut)
                         animate("gain", 0.4, 1100, Easing.QuartInOut)
                         complete()
-//                        animate("innerRadius", 110.0, 500, Easing.CubicInOut)
-//                        complete()
                     }
                 }
                 rounds++
@@ -194,16 +193,22 @@ fun main() = application {
 
             s.updateAnimation()
 
-//            shadow.gain = s.gain
-//            shadow.xShift = 6.0
-//            shadow.yShift = -3.0
-//            if (shadow.gain > 0.9){
-//                shadow.window = 1
-//            } else if (shadow.gain > 0.7){
-//                shadow.window = 2
-//            } else {
-//                shadow.window = 4
-//            }
+            shadow.gain = s.gain
+            shadow.xShift = 6.0
+            shadow.yShift = -3.0
+            if (shadow.gain > 0.9){
+                shadow.window = 1
+            } else if (shadow.gain > 0.7){
+                shadow.window = 2
+            } else {
+                shadow.window = 4
+            }
+
+            shadow2.gain = 0.9
+            shadow2.window = 12
+            shadow2.xShift = 3.0
+            shadow2.yShift = -1.5
+
             bloom.sigma = 0.0
 
             comp.draw(drawer)
