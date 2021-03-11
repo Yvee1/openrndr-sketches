@@ -1,0 +1,191 @@
+#version 450 core
+
+// -- primitiveTypes
+#define d_vertex_buffer 0
+#define d_image 1
+#define d_circle 2
+#define d_rectangle 3
+#define d_font_image_map 4
+#define d_expansion 5
+#define d_fast_line 6
+#define d_mesh_line 7
+#define d_point 8
+#define d_primitive d_rectangle
+
+
+uniform float p_time; 
+layout(origin_upper_left) in vec4 gl_FragCoord;
+
+
+// -- drawerUniforms(true, false)    
+
+layout(shared) uniform ContextBlock {
+    uniform mat4 u_modelNormalMatrix;
+    uniform mat4 u_modelMatrix;
+    uniform mat4 u_viewNormalMatrix;
+    uniform mat4 u_viewMatrix;
+    uniform mat4 u_projectionMatrix;
+    uniform float u_contentScale;
+    uniform vec2 u_viewDimensions;
+};
+
+
+in vec3 va_position;
+in vec3 va_normal;
+in vec2 va_texCoord0;
+in vec3 vi_offset;
+in vec2 vi_dimensions;
+in float vi_rotation;
+in vec4 vi_fill;
+in vec4 vi_stroke;
+in float vi_strokeWeight;
+
+
+
+// -- transformVaryingIn
+in vec3 v_worldNormal;
+in vec3 v_viewNormal;
+in vec3 v_worldPosition;
+in vec3 v_viewPosition;
+in vec4 v_clipPosition;
+flat in mat4 v_modelNormalMatrix;
+
+
+out vec4 o_color;
+
+//
+// Description : Array and textureless GLSL 2D simplex noise function.
+//      Author : Ian McEwan, Ashima Arts.
+//  Maintainer : ijm
+//     Lastmod : 20110822 (ijm)
+//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.
+//               Distributed under the MIT License. See LICENSE file.
+//               https://github.com/ashima/webgl-noise
+//
+
+vec3 mod289(vec3 x) {
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec2 mod289(vec2 x) {
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec3 permute(vec3 x) {
+  return mod289(((x*34.0)+1.0)*x);
+}
+
+float snoise2(vec2 v)
+  {
+  const vec4 C = vec4(0.211324865405187,  // (3.0-sqrt(3.0))/6.0
+                      0.366025403784439,  // 0.5*(sqrt(3.0)-1.0)
+                     -0.577350269189626,  // -1.0 + 2.0 * C.x
+                      0.024390243902439); // 1.0 / 41.0
+// First corner
+  vec2 i  = floor(v + dot(v, C.yy) );
+  vec2 x0 = v -   i + dot(i, C.xx);
+
+// Other corners
+  vec2 i1;
+  //i1.x = step( x0.y, x0.x ); // x0.x > x0.y ? 1.0 : 0.0
+  //i1.y = 1.0 - i1.x;
+  i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+  // x0 = x0 - 0.0 + 0.0 * C.xx ;
+  // x1 = x0 - i1 + 1.0 * C.xx ;
+  // x2 = x0 - 1.0 + 2.0 * C.xx ;
+  vec4 x12 = x0.xyxy + C.xxzz;
+  x12.xy -= i1;
+
+// Permutations
+  i = mod289(i); // Avoid truncation effects in permutation
+  vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+    + i.x + vec3(0.0, i1.x, 1.0 ));
+
+  vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+  m = m*m ;
+  m = m*m ;
+
+// Gradients: 41 points uniformly over a line, mapped onto a diamond.
+// The ring size 17*17 = 289 is close to a multiple of 41 (41*7 = 287)
+
+  vec3 x = 2.0 * fract(p * C.www) - 1.0;
+  vec3 h = abs(x) - 0.5;
+  vec3 ox = floor(x + 0.5);
+  vec3 a0 = x - ox;
+
+// Normalise gradients implicitly by scaling m
+// Approximation of: m *= inversesqrt( a0*a0 + h*h );
+  m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+
+// Compute final noise value at P
+  vec3 g;
+  g.x  = a0.x  * x0.x  + h.x  * x0.y;
+  g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+  return 130.0 * dot(m, g);
+}
+
+//                    #pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
+//                    #pragma glslify: snoise4 = require(glsl-noise/simplex/4d)
+
+                    float ridge(float x, float offset){
+                        float n = offset - abs(x);
+                        return n * n;
+                    }
+                    
+                    float numOctaves = 4.0;
+                    float scale = 5.0;
+                    
+                    float noise(in vec2 uv){
+                        return pow(ridge(snoise2(scale*uv), 0.3), 0.2);
+                    }
+                    
+                    float fbm( in vec2 x, in float H, in float lacunarity )
+                    {    
+                        float G = exp2(-H);
+                        float f = 1.0;
+                        float a = 1.0;
+                        float t = 0.0;
+                        for( int i=0; i<numOctaves; i++ )
+                        {
+                            t += a*noise(f*x);
+                            f *= lacunarity;
+                            a *= G;
+                        }
+                        return t;
+                    }
+flat in int v_instance;
+in vec3 v_boundsSize;
+
+void main(void) {
+        // -- fragmentConstants
+    int c_instance = v_instance;
+    int c_element = 0;
+    vec2 c_screenPosition = gl_FragCoord.xy / u_contentScale;
+    float c_contourPosition = 0;
+    vec3 c_boundsPosition = vec3(va_texCoord0, 0.0);
+    vec3 c_boundsSize = v_boundsSize;
+    vec4 x_fill = vi_fill;
+    vec4 x_stroke = vi_stroke;
+    {
+                            vec2 uv = c_boundsPosition.xy;
+//                    x_fill.rgb = vec3(pow(snoise2(scale*uv), snoise2(uv + vec2(160.0+p_time, 1540.0)) + 1.5));
+                    x_fill.rgb = vec3(fbm(uv));
+//                    x_fill.rgb = vec3(fbm(uv, 0.5, 1.8));
+    }
+    vec2 wd = fwidth(va_texCoord0 - vec2(0.5));
+    vec2 d = abs((va_texCoord0 - vec2(0.5)) * 2);
+
+    float irx = smoothstep(0.0, wd.x * 2.5, 1.0-d.x - vi_strokeWeight*2.0/vi_dimensions.x);
+    float iry = smoothstep(0.0, wd.y * 2.5, 1.0-d.y - vi_strokeWeight*2.0/vi_dimensions.y);
+    float ir = irx*iry;
+
+    vec4 final = vec4(1.0);
+    final.rgb = x_fill.rgb * x_fill.a;
+    final.a = x_fill.a;
+
+    float sa = (1.0-ir) * x_stroke.a;
+    final.rgb = final.rgb * (1.0-sa) + x_stroke.rgb * sa;
+    final.a = final.a * (1.0-sa) + sa;
+
+       o_color = final;
+}

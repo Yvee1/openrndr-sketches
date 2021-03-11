@@ -1,0 +1,27 @@
+ffmpeg version N-93286-g4635f64953 Copyright (c) 2000-2019 the FFmpeg developers
+  built with gcc 8.2.1 (GCC) 20190212
+  configuration: --enable-gpl --enable-version3 --enable-sdl2 --enable-fontconfig --enable-gnutls --enable-iconv --enable-libass --enable-libdav1d --enable-libbluray --enable-libfreetype --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenjpeg --enable-libopus --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libtheora --enable-libtwolame --enable-libvpx --enable-libwavpack --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxml2 --enable-libzimg --enable-lzma --enable-zlib --enable-gmp --enable-libvidstab --enable-libvorbis --enable-libvo-amrwbenc --enable-libmysofa --enable-libspeex --enable-libxvid --enable-libaom --enable-libmfx --enable-amf --enable-ffnvcodec --enable-cuvid --enable-d3d11va --enable-nvenc --enable-nvdec --enable-dxva2 --enable-avisynth --enable-libopenmpt
+  libavutil      56. 26.100 / 56. 26.100
+  libavcodec     58. 47.102 / 58. 47.102
+  libavformat    58. 26.101 / 58. 26.101
+  libavdevice    58.  6.101 / 58.  6.101
+  libavfilter     7. 48.100 /  7. 48.100
+  libswscale      5.  4.100 /  5.  4.100
+  libswresample   3.  4.100 /  3.  4.100
+  libpostproc    55.  4.100 / 55.  4.100
+Input #0, rawvideo, from 'pipe:':
+  Duration: N/A, start: 0.000000, bitrate: 1600000 kb/s
+    Stream #0:0: Video: rawvideo (RGBA / 0x41424752), rgba, 1000x1000, 1600000 kb/s, 50 tbr, 50 tbn, 50 tbc
+Stream mapping:
+  Stream #0:0 -> #0:0 (rawvideo (native) -> gif (native))
+Output #0, gif, to 'video/Metaballs-2021-02-22-21.33.43.gif':
+  Metadata:
+    encoder         : Lavf58.26.101
+    Stream #0:0: Video: gif, pal8, 1000x1000, q=2-31, 200 kb/s, 50 fps, 100 tbn, 50 tbc
+    Metadata:
+      encoder         : Lavc58.47.102 gif
+frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    [Parsed_palettegen_1 @ 000002e055ce5e40] 255(+1) colors generated out of 3067 colors; ratio=0.083143
+[Parsed_palettegen_1 @ 000002e055ce5e40] Dupped color: FF3A3F41
+[Parsed_palettegen_1 @ 000002e055ce5e40] Dupped color: FFE4E5E6
+frame=    5 fps=0.6 q=-0.0 size=       5kB time=00:00:00.09 bitrate= 445.4kbits/s speed=0.01x    frame=   82 fps=8.7 q=-0.0 size=      84kB time=00:00:01.63 bitrate= 424.6kbits/s speed=0.172x    frame=  145 fps= 15 q=-0.0 size=     256kB time=00:00:02.89 bitrate= 725.7kbits/s speed=0.289x    frame=  195 fps= 19 q=-0.0 size=     768kB time=00:00:03.89 bitrate=1617.3kbits/s speed=0.371x    frame=  200 fps= 19 q=-0.0 Lsize=     820kB time=00:00:03.99 bitrate=1683.2kbits/s speed=0.378x    
+video:820kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.002382%

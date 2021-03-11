@@ -11,8 +11,8 @@ val applicationMainClass = "TemplateProgramKt"
 
 /*  Which additional (ORX) libraries should be added to this project. */
 val orxFeatures = setOf(
-//  "orx-boofcv",
-//  "orx-camera",
+    "orx-boofcv",
+    "orx-camera",
 //  "orx-chataigne",
     "orx-compositor",
 //  "orx-dnk3",
@@ -21,36 +21,50 @@ val orxFeatures = setOf(
 //  "orx-parameters",
 //  "orx-filter-extension",
     "orx-fx",
-//  "orx-glslify",
+    "orx-glslify",
 //  "orx-gradient-descent",
     "orx-gui",
     "orx-image-fit",
 //  "orx-integral-image",
 //  "orx-interval-tree",
 //  "orx-jumpflood",
-//  "orx-kdtree",
-//  "orx-mesh-generators",
+    "orx-kdtree",
+    "orx-mesh-generators",
 //  "orx-midi",
 //  "orx-no-clear",
     "orx-noise",
 //  "orx-obj-loader",
     "orx-olive",
 //  "orx-osc",
-//  "orx-palette",
-//  "orx-poisson-fill",
+    "orx-palette",
+    "orx-poisson-fill",
 //  "orx-rabbit-control,
 //  "orx-runway",
     "orx-shade-styles",
-//  "orx-shader-phrases",
-//  "orx-shapes",
+    "orx-shader-phrases",
+    "orx-shapes",
 //  "orx-syphon",
 //  "orx-temporal-blur",
 //  "orx-time-operators",
 //  "orx-kinect-v1",
     "orx-video-profiles",
     "orx-temporal-blur",
+    "orx-color",
+    "orx-tensorflow",
 
     "orx-panel"
+)
+
+val ormlFeatures = setOf<String>(
+    "orml-blazepose",
+//    "orml-dbface",
+    "orml-facemesh",
+//    "orml-image-classifier",
+//    "orml-psenet",
+    "orml-ssd",
+    "orml-style-transfer",
+//    "orml-super-resolution",
+    "orml-u2net"
 )
 
 /* Which OPENRNDR libraries should be added to this project? */
@@ -59,11 +73,17 @@ val openrndrFeatures = setOf(
 )
 
 /*  Which version of OPENRNDR and ORX should be used? */
-val openrndrUseSnapshot = false
-val openrndrVersion = if (openrndrUseSnapshot) "0.4.0-SNAPSHOT" else "0.3.44"
+val openrndrUseSnapshot = true
+val openrndrVersion = if (openrndrUseSnapshot) "0.4.0-SNAPSHOT" else "0.3.45-rc.6"
 
-val orxUseSnapshot = false
-val orxVersion = if (orxUseSnapshot) "0.4.0-SNAPSHOT" else "0.3.53"
+val orxUseSnapshot = true
+val orxVersion = if (orxUseSnapshot) "0.4.0-SNAPSHOT" else "0.3.55-rc.9"
+
+val ormlUseSnapshot = false
+val ormlVersion = if (ormlUseSnapshot) "0.4.0-SNAPSHOT" else "0.3.0-rc.5"
+
+// choices are "orx-tensorflow-gpu", "orx-tensorflow-mkl", "orx-tensorflow"
+val orxTensorflowBackend = "orx-tensorflow-gpu"
 
 //<editor-fold desc="This is code for OPENRNDR, no need to edit this .. most of the times">
 val supportedPlatforms = setOf("windows", "macos", "linux-x64", "linux-arm64")
@@ -115,6 +135,10 @@ repositories {
 
 fun DependencyHandler.orx(module: String): Any {
         return "org.openrndr.extra:$module:$orxVersion"
+}
+
+fun DependencyHandler.orml(module: String): Any {
+    return "org.openrndr.orml:$module:$ormlVersion"
 }
 
 fun DependencyHandler.openrndr(module: String): Any {
@@ -169,6 +193,14 @@ dependencies {
 
     for (feature in orxFeatures) {
         implementation(orx(feature))
+    }
+
+    for (feature in ormlFeatures) {
+        implementation(orml(feature))
+    }
+
+    if ("orx-tensorflow" in orxFeatures) {
+        runtimeOnly("org.openrndr.extra:$orxTensorflowBackend-natives-$openrndrOs:$orxVersion")
     }
 
     if ("orx-kinect-v1" in orxFeatures) {

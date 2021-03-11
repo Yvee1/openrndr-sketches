@@ -1,30 +1,20 @@
-import org.openrndr.Fullscreen
-import org.openrndr.Program
 import org.openrndr.animatable.Animatable
-import org.openrndr.animatable.Clock
 import org.openrndr.animatable.easing.Easing
 import org.openrndr.application
 import org.openrndr.color.ColorRGBa
-import org.openrndr.color.ColorXSVa
-import org.openrndr.draw.*
 import org.openrndr.extensions.Screenshots
 import org.openrndr.extra.compositor.*
 import org.openrndr.extra.fx.blur.GaussianBloom
 import org.openrndr.extra.fx.shadow.DropShadow
 import org.openrndr.extra.gui.GUI
 import org.openrndr.extra.gui.addTo
-import org.openrndr.extra.noise.filters.SpeckleNoise
-import org.openrndr.extra.olive.Olive
-import org.openrndr.extra.olive.oliveProgram
 import org.openrndr.extra.parameters.*
-import org.openrndr.extra.shadestyles.linearGradient
+import org.openrndr.extra.shadestyles.LinearGradient
 import org.openrndr.extra.temporalblur.*
+import org.openrndr.extra.videoprofiles.GIFProfile
 import org.openrndr.ffmpeg.ScreenRecorder
-import org.openrndr.ffmpeg.VideoWriterProfile
 import org.openrndr.math.IntVector2
-import org.openrndr.math.Polar
 import org.openrndr.math.Vector2
-import org.openrndr.math.Vector2.Companion.fromPolar
 import org.openrndr.shape.*
 import kotlin.math.*
 
@@ -33,8 +23,8 @@ import kotlin.math.*
  *  and https://en.wikipedia.org/wiki/Annulus_(mathematics)#/media/File:Mamikon_annulus_area_visualisation.svg
  */
 
-const val RECORD = false
-const val GIF = true
+const private val RECORD = true
+const private val GIF = true
 
 fun main() = application {
     configure {
@@ -111,10 +101,8 @@ fun main() = application {
                         }
 
                         drawer.stroke = ColorRGBa.BLACK
-                        drawer.shadeStyle = linearGradient(ColorRGBa(0.15, 0.15, 0.15), ColorRGBa.GRAY, rotation = toDegrees(ca)+90)
+                        drawer.shadeStyle = LinearGradient(ColorRGBa(0.15, 0.15, 0.15), ColorRGBa.GRAY, rotation = toDegrees(ca)+90)
 
-//                        drawer.stroke = null
-//                        drawer.fill = ColorXSVa(i.toDouble() / s.segments * 360.0, 0.85, 0.95, 1.0).toRGBa()
                         drawer.contour(c)
                     }
                 }
@@ -156,7 +144,11 @@ fun main() = application {
             extend(TemporalBlur()) {
                 duration = 1.5
                 samples = 45
-                fps = 45.0
+                if (GIF) {
+                    fps = 45.0
+                } else {
+                    fps = 60.0
+                }
                 jitter = 1.0
             }
         } else {
@@ -172,7 +164,6 @@ fun main() = application {
                         animate("innerRadius", 40.0, 1000, Easing.QuartInOut)
                         animate("gain", 0.6, 1000, Easing.QuartInOut)
                         complete()
-//                        delay(50)
                         animate("innerRadius", 10.0, 300, Easing.QuadInOut)
                         animate("gain", 1.0, 300, Easing.QuartInOut)
                         complete()
