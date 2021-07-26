@@ -78,7 +78,6 @@ fun drawVariableWidthPath(program: Program, path: Path3D, weights: List<Double>,
         driver.setState(drawer.drawStyle)
         driver.drawVertexBuffer(shader, listOf(vb), DrawPrimitive.PATCHES, 0, vc)
         shader.end()
-        drawer.fill = ColorRGBa.WHITE
     }
 }
 

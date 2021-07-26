@@ -266,12 +266,12 @@ fun main() = application {
 //        val colors = listOf(rgb("5C415D"), rgb("FFFC31"), rgb("E94F37"))
         val colors = listOf(ColorRGBa.WHITE, rgb("393E41"), rgb("FFFC31"), rgb("E94F37"))
 
-        extend(ScreenRecorder()){
-            maximumDuration = 4.0
-//            maximumFrames = ((1000 + 2 * 600.0) / (2*4.0)).toLong()
-            profile = GIFProfile()
-            frameRate = 50
-        }
+//        extend(ScreenRecorder()){
+//            maximumDuration = 4.0
+////            maximumFrames = ((1000 + 2 * 600.0) / (2*4.0)).toLong()
+//            profile = GIFProfile()
+//            frameRate = 50
+//        }
 
 //        extend(TemporalBlur()){
 //            fps = 50.0
