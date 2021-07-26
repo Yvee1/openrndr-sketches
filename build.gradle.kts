@@ -5,7 +5,7 @@ import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 
 /* the name of this project, default is the template version but you are free to change these */
 group = "org.openrndr.template"
-version = "0.3.14"
+version = "0.4.0"
 
 val applicationMainClass = "TemplateProgramKt"
 
@@ -14,11 +14,11 @@ val orxFeatures = setOf(
     "orx-boofcv",
     "orx-camera",
 //  "orx-chataigne",
+    "orx-color",
     "orx-compositor",
 //  "orx-dnk3",
 //  "orx-easing",
 //  "orx-file-watcher",
-//  "orx-parameters",
 //  "orx-filter-extension",
     "orx-fx",
     "orx-glslify",
@@ -30,6 +30,9 @@ val orxFeatures = setOf(
 //  "orx-jumpflood",
     "orx-kdtree",
     "orx-mesh-generators",
+//  "orx-keyframer",      
+//  "orx-kinect-v1",
+//  "orx-kotlin-parser",
 //  "orx-midi",
 //  "orx-no-clear",
     "orx-noise",
@@ -38,21 +41,21 @@ val orxFeatures = setOf(
 //  "orx-osc",
     "orx-palette",
     "orx-poisson-fill",
-//  "orx-rabbit-control,
+    "orx-panel",
+//  "orx-parameters",
+//  "orx-rabbit-control",
+//  "orx-realsense2",
 //  "orx-runway",
     "orx-shade-styles",
     "orx-shader-phrases",
     "orx-shapes",
 //  "orx-syphon",
-//  "orx-temporal-blur",
-//  "orx-time-operators",
-//  "orx-kinect-v1",
-    "orx-video-profiles",
     "orx-temporal-blur",
-    "orx-color",
     "orx-tensorflow",
-
-    "orx-panel"
+//  "orx-time-operators",
+    "orx-timer",
+    "orx-triangulation",
+    "orx-video-profiles"
 )
 
 val ormlFeatures = setOf<String>(
@@ -74,13 +77,13 @@ val openrndrFeatures = setOf(
 
 /*  Which version of OPENRNDR and ORX should be used? */
 val openrndrUseSnapshot = true
-val openrndrVersion = if (openrndrUseSnapshot) "0.4.0-SNAPSHOT" else "0.3.45-rc.6"
+val openrndrVersion = if (openrndrUseSnapshot) "0.5.1-SNAPSHOT" else "0.4.0"
 
 val orxUseSnapshot = true
-val orxVersion = if (orxUseSnapshot) "0.4.0-SNAPSHOT" else "0.3.55-rc.9"
+val orxVersion = if (orxUseSnapshot) "0.5.1-SNAPSHOT" else "0.4.0"
 
-val ormlUseSnapshot = false
-val ormlVersion = if (ormlUseSnapshot) "0.4.0-SNAPSHOT" else "0.3.0-rc.5"
+val ormlUseSnapshot = true
+val ormlVersion = if (ormlUseSnapshot) "0.5.1-SNAPSHOT" else "0.4.0"
 
 // choices are "orx-tensorflow-gpu", "orx-tensorflow-mkl", "orx-tensorflow"
 val orxTensorflowBackend = "orx-tensorflow-gpu"
@@ -116,11 +119,11 @@ enum class Logging {
 /*  What type of logging should this project use? */
 val applicationLogging = Logging.FULL
 
-val kotlinVersion = "1.4.0"
+val kotlinVersion = "1.5.21"
 
 plugins {
     java
-    kotlin("jvm") version("1.4.0")
+    kotlin("jvm") version("1.5.21")
     id("com.github.johnrengelman.shadow") version ("6.1.0")
     id("org.beryx.runtime") version ("1.11.4")
 }
@@ -130,7 +133,7 @@ repositories {
     if (openrndrUseSnapshot || orxUseSnapshot) {
         mavenLocal()
     }
-    maven(url = "https://dl.bintray.com/openrndr/openrndr")
+    maven(url = "https://maven.openrndr.org")
 }
 
 fun DependencyHandler.orx(module: String): Any {
@@ -163,14 +166,13 @@ dependencies {
     runtimeOnly(openrndrNatives("gl3"))
     implementation(openrndr("openal"))
     runtimeOnly(openrndrNatives("openal"))
-    implementation(openrndr("core"))
+    implementation(openrndr("application"))
     implementation(openrndr("svg"))
     implementation(openrndr("animatable"))
     implementation(openrndr("extensions"))
     implementation(openrndr("filter"))
-
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core","1.3.9")
-    implementation("io.github.microutils", "kotlin-logging","1.12.0")
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core","1.5.0")
+    implementation("io.github.microutils", "kotlin-logging-jvm","2.0.6")
 
     when(applicationLogging) {
         Logging.NONE -> {
@@ -193,6 +195,14 @@ dependencies {
 
     for (feature in orxFeatures) {
         implementation(orx(feature))
+    }
+    
+    for (feature in ormlFeatures) {
+        implementation(orml(feature))
+    }
+
+    if ("orx-tensorflow" in orxFeatures) {
+        runtimeOnly("org.openrndr.extra:$orxTensorflowBackend-natives-$openrndrOs:$orxVersion")
     }
 
     for (feature in ormlFeatures) {
