@@ -22,6 +22,7 @@ val orxFeatures = setOf(
 //  "orx-filter-extension",
     "orx-fx",
     "orx-glslify",
+    "orx-git-archiver",
 //  "orx-gradient-descent",
     "orx-gui",
     "orx-image-fit",

@@ -9,8 +9,10 @@ import org.openrndr.draw.DrawPrimitive
 import org.openrndr.draw.isolated
 import org.openrndr.draw.shadeStyle
 import org.openrndr.extensions.Screenshots
+import org.openrndr.extra.gitarchiver.GitArchiver
 import org.openrndr.extra.gui.GUI
 import org.openrndr.extra.olive.oliveProgram
+import org.openrndr.extra.parameters.BooleanParameter
 import org.openrndr.extra.parameters.DoubleParameter
 import org.openrndr.extra.temporalblur.TemporalBlur
 import org.openrndr.extra.videoprofiles.GIFProfile
@@ -20,10 +22,7 @@ import org.openrndr.extras.meshgenerators.sphereMesh
 import org.openrndr.ffmpeg.ScreenRecorder
 import org.openrndr.math.Spherical
 import org.openrndr.math.Vector3
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.pow
-import kotlin.math.sin
+import kotlin.math.*
 
 private const val RECORD = false
 fun main() = applicationSynchronous {
@@ -44,6 +43,12 @@ fun main() = applicationSynchronous {
 
             @DoubleParameter("Easing parameter", 1.0, 5.0)
             var k = 2.8
+
+            @DoubleParameter("FOV", 0.0, 180.0)
+            var fov = 90.0
+
+            @BooleanParameter("Animate")
+            var animate = true
         }
         val gui = GUI()
         gui.add(s)
@@ -100,9 +105,10 @@ fun main() = applicationSynchronous {
         extend(cam) {
 //            eye = Vector3.UNIT_X * 2.0
 //            eye = Vector3(x=1.730467138510836, y=1.0026740264371863, z=0.011326042661080268)
-            eye = Vector3(x = 1.73, y = 1.0, z = 0.0)
+            eye = Vector3(x = sqrt(3.0), y = 1.0, z = 0.0)
             near = 0.001
         }
+        extend(GitArchiver())
         if (!RECORD) {
             extend(Screenshots())
             extend(gui)
@@ -130,11 +136,15 @@ fun main() = applicationSynchronous {
 //        fun easing(x: Double) = Easing.CubicInOut.easer.ease(x, 0.0, 1.0, 1.0)
 
         extend {
-            val t = easing((seconds / s.duration) % 1)
-            val imp = (sin(t * 2 * PI) + 0.5*sin(t * 3 * PI))*1.5
+            cam.camera.fov = s.fov
+
+            if (s.animate) {
+                val t = easing((seconds / s.duration) % 1)
+                val imp = (sin(t * 2 * PI) + 0.5 * sin(t * 3 * PI)) * 1.5
 //            val imp = sin(t * 2 * PI) + 0.5*sin(t * 4 * PI) + 0.25*cos(t * 4 * PI) - 0.25
-            val pos = Spherical(oldTheta + t * 360.0, oldPhi + imp * 10.0, cam.camera.spherical.radius)
-            cam.camera.setView(cam.camera.lookAt, pos, cam.camera.fov)
+                val pos = Spherical(oldTheta + t * 360.0, oldPhi + imp * 10.0, cam.camera.spherical.radius)
+                cam.camera.setView(cam.camera.lookAt, pos, cam.camera.fov)
+            }
 
 //            print(cam.camera.spherical.cartesian.toString() + "\r")
             val planeShadeStyle = shadeStyle {
