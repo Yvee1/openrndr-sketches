@@ -31,7 +31,7 @@ fun main() = applicationSynchronous {
         windowResizable = true
     }
 
-    oliveProgram {
+    program {
         val RECORD = false
         val s = object {
             @DoubleParameter("Translation", -5.0, 5.0)
