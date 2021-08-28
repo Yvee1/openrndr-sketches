@@ -81,7 +81,7 @@ fun main() = applicationSynchronous {
                 """.trimIndent()
 
         val render = """
-            complexPos = cx_div(vec2(1.0, 0.0), complexPos); 
+//            complexPos = cx_div(vec2(1.0, 0.0), complexPos); 
             float intensity = 0.0;
             intensity += 1.0 - aastep(-0.75 + p_translation, complexPos.x);
             intensity += aastep(0.75 + p_translation, complexPos.x);
