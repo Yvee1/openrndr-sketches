@@ -1,5 +1,5 @@
 import org.openrndr.animatable.Animatable
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.color.ColorRGBa
 import org.openrndr.color.rgb
 import org.openrndr.draw.Drawer
@@ -23,7 +23,7 @@ import org.openrndr.math.transforms.translate
 import org.openrndr.shape.*
 import kotlin.math.*
 
-fun main() = application {
+fun main() = applicationSynchronous {
     configure {
         width = 1000
         height = 1000

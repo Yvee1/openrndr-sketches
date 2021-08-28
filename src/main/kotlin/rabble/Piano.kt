@@ -1,9 +1,9 @@
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.color.ColorXSLa
 import org.openrndr.color.ColorXSVa
 import org.openrndr.extra.olive.oliveProgram
 
-fun main() = application {
+fun main() = applicationSynchronous {
     configure {
         width = 800
         height = 800

@@ -1,6 +1,6 @@
 import org.openrndr.animatable.Animatable
 import org.openrndr.animatable.easing.Easing
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.color.ColorRGBa
 import org.openrndr.color.ColorXSVa
 import org.openrndr.draw.Drawer
@@ -29,7 +29,7 @@ import org.openrndr.shape.ShapeContour
 import org.openrndr.shape.ShapeContour.Companion.fromPoints
 import kotlin.math.*
 
-fun main() = application {
+fun main() = applicationSynchronous {
     configure {
         width = 800
         height = 800
@@ -259,17 +259,17 @@ fun main() = application {
 
                     // Animation should be a multiple of 3500 ms long for seamless loop
                     // see LineSegment.points function
-                    s.apply {
-                        delay(700)
-                        complete()
-                        animate("offset", 0.02, 800, Easing.QuartInOut)
-                        complete()
-                        animate("rotated", 120.0, 900, Easing.CubicInOut)
-                        complete()
-                        animate("rotatedTiling", 120.0, 1100, Easing.CubicInOut)
-                        animate("offset", -0.075, 1000, Easing.QuartInOut)
-                        complete()
-                    }
+//                    s.apply {
+//                        delay(700)
+//                        complete()
+//                        animate("offset", 0.02, 800, Easing.QuartInOut)
+//                        complete()
+//                        animate("rotated", 120.0, 900, Easing.CubicInOut)
+//                        complete()
+//                        animate("rotatedTiling", 120.0, 1100, Easing.CubicInOut)
+//                        animate("offset", -0.075, 1000, Easing.QuartInOut)
+//                        complete()
+//                    }
                 }
                 rounds++
             }

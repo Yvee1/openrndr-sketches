@@ -1,5 +1,5 @@
 import org.openrndr.animatable.Animatable
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.color.ColorRGBa
 import org.openrndr.color.ColorXSLa
 import org.openrndr.color.ColorXSVa
@@ -26,7 +26,7 @@ import org.openrndr.shape.*
 import org.openrndr.svg.loadSVG
 import kotlin.math.*
 
-fun main() = application {
+fun main() = applicationSynchronous {
     configure {
         width = 2000
         height = 1000

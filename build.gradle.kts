@@ -7,7 +7,7 @@ import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 group = "org.openrndr.template"
 version = "0.4.0"
 
-val applicationMainClass = "TemplateProgramKt"
+val applicationMainClass = "TrashTestkt"
 
 /*  Which additional (ORX) libraries should be added to this project. */
 val orxFeatures = setOf(
@@ -134,6 +134,9 @@ repositories {
         mavenLocal()
     }
     maven(url = "https://maven.openrndr.org")
+
+    // For kmath complex numbers ?
+    maven(url = "https://repo.kotlin.link")
 }
 
 fun DependencyHandler.orx(module: String): Any {
@@ -158,6 +161,15 @@ fun DependencyHandler.orxNatives(module: String): Any {
 
 dependencies {
     /*  This is where you add additional (third-party) dependencies */
+    // For LaTeX
+//    implementation("org.scilab.forge:jlatexmath:1.0.7")
+//    implementation("org.apache.xmlgraphics:batik:1.13")
+    implementation("org.scilab.forge:jlatexmath:1.0.7")
+    implementation("com.guicedee.services:org.apache.fop:1.1.0.7-jre15")
+    implementation("org.apache.xmlgraphics:batik:1.13")
+
+    // For complex number math
+    implementation("space.kscience:kmath-complex:0.3.0-dev-8")
 
 //    implementation("org.jsoup:jsoup:1.12.2")
 //    implementation("com.google.code.gson:gson:2.8.6")
@@ -231,7 +243,7 @@ configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "16"
 }
 
 

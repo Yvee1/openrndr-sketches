@@ -1,4 +1,4 @@
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.color.ColorRGBa
 import org.openrndr.extra.noise.poissonDiskSampling
 import org.openrndr.extra.olive.oliveProgram
@@ -10,7 +10,7 @@ import org.openrndr.shape.Circle
 import org.openrndr.shape.Shape
 import org.openrndr.svg.loadSVG
 
-fun main() = application {
+fun main() = applicationSynchronous {
     configure {
         width = 800
         height = 800
@@ -19,13 +19,14 @@ fun main() = application {
     oliveProgram {
         fun packCircles(shape: Shape, r: Double): List<Circle> {
             val rect = shape.bounds
-            val points = poissonDiskSampling(rect.width, rect.height, r, 200) { _, _, v ->
-                shape.closedContours.any { (v + rect.corner) in it }
-            }.map { it+rect.corner }
-
-            return points.map { Circle(it, r/2) }.filter { circle ->
-                circle.contour.equidistantPositions(5).all { p -> shape.closedContours.any { p in it } }
-            }
+//            val points = poissonDiskSampling(rect.width, rect.height, r, 200) { _, _, v ->
+//                shape.closedContours.any { (v + rect.corner) in it }
+//            }.map { it+rect.corner }
+//
+//            return points.map { Circle(it, r/2) }.filter { circle ->
+//                circle.contour.equidistantPositions(5).all { p -> shape.closedContours.any { p in it } }
+//            }
+            return emptyList()
         }
 
         val butterfly = loadSVG("data/images/butterfly.svg").findShapes()[0].effectiveShape.transform(Matrix44.scale(0.5, 0.5, 1.0)* Matrix44.translate(150.0, 350.0, 0.0))

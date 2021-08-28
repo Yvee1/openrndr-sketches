@@ -1,4 +1,4 @@
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.draw.LineJoin
@@ -24,12 +24,13 @@ import org.openrndr.math.transforms.translate
 import org.openrndr.shape.Circle
 import org.openrndr.shape.Shape
 import org.openrndr.shape.ShapeContour
+import org.openrndr.shape.contains
 import org.openrndr.svg.loadSVG
 import kotlin.math.PI
 import kotlin.math.max
 import kotlin.random.Random
 
-fun main() = application {
+fun main() = applicationSynchronous {
     configure {
         width = 800
         height = 800

@@ -1,4 +1,4 @@
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.color.ColorRGBa
 import org.openrndr.color.rgb
 import org.openrndr.draw.Drawer
@@ -11,7 +11,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sign
 
-//fun main() = application {
+//fun main() = applicationSynchronous {
 //    configure {
 //        width = 800
 //        height = 800

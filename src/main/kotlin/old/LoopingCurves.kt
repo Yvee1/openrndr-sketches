@@ -1,4 +1,4 @@
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.extra.gui.GUI
 import org.openrndr.extra.olive.oliveProgram
 import org.openrndr.extra.parameters.DoubleParameter
@@ -9,7 +9,7 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-fun main() = application {
+fun main() = applicationSynchronous {
     configure {
         width = 800
         height = 800

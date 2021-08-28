@@ -1,6 +1,6 @@
 import org.openrndr.animatable.Animatable
 import org.openrndr.animatable.easing.Easing
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.color.ColorRGBa
 import org.openrndr.color.ColorXSLa
 import org.openrndr.draw.Drawer
@@ -22,7 +22,7 @@ import kotlin.math.max
  *  Made using the following tutorial: https://varun.ca/torsions/
  */
 
-fun main() = application {
+fun main() = applicationSynchronous {
     configure {
 //        width = 1000
 //        height = 1000
@@ -205,10 +205,10 @@ fun main() = application {
                 }
                 slice.apply {
 //                        delay(i.toLong()*50)
-                    animate("wrappedAmount", 0.999, (duration * 1000 / 2).toLong(), Easing.QuadInOut)
-                    complete()
-                    animate("wrappedAmount", 0.0, (duration * 1000 / 2).toLong(), Easing.QuadInOut)
-                    complete()
+//                    animate("wrappedAmount", 0.999, (duration * 1000 / 2).toLong(), Easing.QuadInOut)
+//                    complete()
+//                    animate("wrappedAmount", 0.0, (duration * 1000 / 2).toLong(), Easing.QuadInOut)
+//                    complete()
                 }
                 //                test++
             }

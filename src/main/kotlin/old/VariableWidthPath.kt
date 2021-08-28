@@ -10,7 +10,7 @@ import org.openrndr.math.*
 import org.openrndr.shape.Path3D
 
 fun main() {
-    application {
+    applicationSynchronous {
         configure {
             width = 800
             height = 800

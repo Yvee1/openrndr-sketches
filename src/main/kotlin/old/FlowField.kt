@@ -1,4 +1,4 @@
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.color.ColorRGBa
 import org.openrndr.extra.noise.Random.gaussian
 import org.openrndr.extra.noise.simplex
@@ -17,7 +17,7 @@ import kotlin.math.cos
 import kotlin.math.round
 import kotlin.math.sin
 
-fun main() = application {
+fun main() = applicationSynchronous {
     configure {
         width = 800
         height = 800
@@ -95,18 +95,20 @@ fun main() = application {
             }
 
 //        val curves = List(40) { makeCurve(Vector2(startX + (it-10)*30.0 + 0.0, 200.0), grid, 550) }
-            val curves = Rectangle(startX*1.0, startY*1.0, (endX-startX).toDouble(), (endY-startY).toDouble()).shape.randomPoints(10000).map {
-                makeCurve(it, grid, gaussian(10.0, 15.0).toInt().clamp(5, 50))
-            }
-
-            drawer.apply {
-                clear(ColorRGBa.WHITE)
-                strokeWeight = 0.5
-                stroke = ColorRGBa.BLACK.opacify(0.2)
-//                lineSegments(arrows)
-                contours(curves)
-//                circles(arrows.map {it.start}, 5.0)
-            }
+            val rect = Rectangle(startX*1.0, startY*1.0, (endX-startX).toDouble(), (endY-startY).toDouble())
+//            val curves = List(10000) { rect.randomPoint() }.map {
+//                makeCurve(it, grid, gaussian(10.0, 15.0).toInt().clamp(5, 50))
+//            }
+//            val curves = emptyList()
+//
+//            drawer.apply {
+//                clear(ColorRGBa.WHITE)
+//                strokeWeight = 0.5
+//                stroke = ColorRGBa.BLACK.opacify(0.2)
+////                lineSegments(arrows)
+//                contours(curves)
+////                circles(arrows.map {it.start}, 5.0)
+//            }
         }
     }
 }

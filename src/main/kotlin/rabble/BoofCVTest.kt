@@ -5,7 +5,7 @@ import boofcv.factory.feature.detect.edge.FactoryEdgeDetectors
 import boofcv.struct.ConnectRule
 import boofcv.struct.image.GrayS16
 import boofcv.struct.image.GrayU8
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.boofcv.binding.toGrayF32
 import org.openrndr.boofcv.binding.toGrayU8
 import org.openrndr.boofcv.binding.toShapeContours
@@ -24,7 +24,7 @@ import org.openrndr.math.Vector2
 import org.openrndr.shape.*
 
 fun main() {
-    application {
+    applicationSynchronous {
         configure {
             width = 640
             height = 480
@@ -45,9 +45,9 @@ fun main() {
             video.play()
 
             val videoFrame = colorBuffer(video.width, video.height)
-            video.newFrame.listen {
-                it.frame.copyTo(videoFrame, targetRectangle = IntRectangle(0, videoFrame.height - (videoFrame.height - height) / 2, it.frame.width, -it.frame.height))
-            }
+//            video.newFrame.listen {
+//                it.frame.copyTo(videoFrame, targetRectangle = IntRectangle(0, videoFrame.height - (videoFrame.height - height) / 2, it.frame.width, -it.frame.height))
+//            }
 
             extend(gui)
             extend {

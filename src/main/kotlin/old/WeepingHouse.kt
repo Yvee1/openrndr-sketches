@@ -1,6 +1,6 @@
 import org.openrndr.animatable.Animatable
 import org.openrndr.animatable.easing.Easing
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.extra.compositor.*
@@ -25,7 +25,7 @@ import kotlin.math.floor
 import kotlin.math.max
 import kotlin.math.sin
 
-fun main() = application {
+fun main() = applicationSynchronous {
     configure {
         width = 800
         height = 800

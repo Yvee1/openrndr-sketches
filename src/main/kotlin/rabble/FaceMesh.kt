@@ -1,4 +1,4 @@
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.*
 import org.openrndr.extras.meshgenerators.boxMesh
@@ -13,7 +13,7 @@ import org.openrndr.shape.IntRectangle
 import org.openrndr.shape.Rectangle
 
 fun main() {
-    application {
+    applicationSynchronous {
         configure {
             width = 640
             height = 640
@@ -27,9 +27,9 @@ fun main() {
                 colorBuffer()
                 depthBuffer()
             }
-            video.newFrame.listen {
-                it.frame.copyTo(squareImage, targetRectangle = IntRectangle(0, squareImage.height - (squareImage.height - 480) / 2, it.frame.width, -it.frame.height))
-            }
+//            video.newFrame.listen {
+//                it.frame.copyTo(squareImage, targetRectangle = IntRectangle(0, squareImage.height - (squareImage.height - 480) / 2, it.frame.width, -it.frame.height))
+//            }
             val blazeFace = BlazeFace.load()
             val faceMesh = FaceMesh.load()
 

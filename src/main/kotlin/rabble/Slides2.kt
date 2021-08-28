@@ -1,4 +1,4 @@
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.loadFont
 import org.openrndr.draw.loadImage
@@ -19,7 +19,7 @@ import kotlin.math.sin
  * I copied the code from there
  */
 
-fun main() = application {
+fun main() = applicationSynchronous {
     configure {
         width = 1000
         height = 1000
@@ -34,14 +34,18 @@ fun main() = application {
             circle(w/2, h/2, Math.min(w, h)/2.5)
             for (i in 0 until 10000) {
                 val r = Rectangle(0.0, 0.0, w, h).random()
+//                println(r)
                 nearest(r)?.let {
                     lineSegment(r, it.point.position)
                 }
+//                println(nearest(r))
             }
         }
 
         extend {
             drawer.clear(ColorRGBa.PINK)
+            drawer.stroke = ColorRGBa.BLACK
+            drawer.strokeWeight = 3.0
             drawer.composition(comp)
         }
     }

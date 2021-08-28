@@ -1,6 +1,6 @@
 import org.openrndr.animatable.Animatable
 import org.openrndr.animatable.easing.Easing
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.color.ColorRGBa
 import org.openrndr.extensions.Screenshots
 import org.openrndr.extra.compositor.*
@@ -26,7 +26,7 @@ import kotlin.math.*
 const private val RECORD = true
 const private val GIF = true
 
-fun main() = application {
+fun main() = applicationSynchronous {
     configure {
         width = 1000
         height = 1000
@@ -161,22 +161,22 @@ fun main() = application {
                     application.exit()
                 } else {
                     s.apply {
-                        animate("innerRadius", 40.0, 1000, Easing.QuartInOut)
-                        animate("gain", 0.6, 1000, Easing.QuartInOut)
-                        complete()
-                        animate("innerRadius", 10.0, 300, Easing.QuadInOut)
-                        animate("gain", 1.0, 300, Easing.QuartInOut)
-                        complete()
-                        animate("innerRadius", 20.0, 500, Easing.QuadInOut)
-                        animate("gain", 0.8, 500, Easing.QuartInOut)
-                        complete()
-                        animate("innerRadius", 15.0, 1100, Easing.QuadInOut)
-                        animate("gain", 0.9, 1100, Easing.QuartInOut)
-                        complete()
+                        animate(::innerRadius, 40.0, 1000, Easing.QuartInOut)
+                        animate(::gain, 0.6, 1000, Easing.QuartInOut)
+//                        complete()
+                        animate(::innerRadius, 10.0, 300, Easing.QuadInOut)
+                        animate(::gain, 1.0, 300, Easing.QuartInOut)
+//                        complete()
+                        animate(::innerRadius, 20.0, 500, Easing.QuadInOut)
+                        animate(::gain, 0.8, 500, Easing.QuartInOut)
+//                        complete()
+                        animate(::innerRadius, 15.0, 1100, Easing.QuadInOut)
+                        animate(::gain, 0.9, 1100, Easing.QuartInOut)
+//                        complete()
                         delay(100)
-                        animate("innerRadius", 190.0, 800, Easing.QuartInOut)
-                        animate("gain", 0.4, 1100, Easing.QuartInOut)
-                        complete()
+                        animate(::innerRadius, 190.0, 800, Easing.QuartInOut)
+                        animate(::gain, 0.4, 1100, Easing.QuartInOut)
+//                        complete()
                     }
                 }
                 rounds++

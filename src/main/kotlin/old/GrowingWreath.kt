@@ -1,7 +1,7 @@
 package old
 
 import org.openrndr.animatable.Animatable
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.color.ColorRGBa
 import org.openrndr.color.ColorXSVa
 import org.openrndr.draw.*
@@ -19,8 +19,8 @@ import org.openrndr.extra.parameters.ColorParameter
 import org.openrndr.extra.parameters.DoubleParameter
 import org.openrndr.extra.parameters.IntParameter
 import org.openrndr.extra.noise.*
-import org.openrndr.extra.noise.filters.CellNoise
-import org.openrndr.extra.noise.filters.SimplexNoise3D
+//import org.openrndr.extra.noise.filters.CellNoise
+//import org.openrndr.extra.noise.filters.SimplexNoise3D
 import org.openrndr.extra.olive.Reloadable
 import org.openrndr.extra.shadestyles.radialGradient
 import org.openrndr.extra.temporalblur.TemporalBlur
@@ -41,7 +41,7 @@ import kotlin.math.sin
  * Inspired by: https://codepen.io/pelletierauger/full/xOqNYa/
  */
 
-fun main() = application {
+fun main() = applicationSynchronous {
     configure {
         width = 1000
         height = 1000

@@ -1,5 +1,5 @@
 import org.intellij.lang.annotations.Language
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.draw.loadImage
 import org.openrndr.draw.shadeStyle
 import org.openrndr.extensions.Screenshots
@@ -8,7 +8,7 @@ import org.openrndr.extra.videoprofiles.GIFProfile
 import org.openrndr.ffmpeg.ScreenRecorder
 import kotlin.math.PI
 
-fun main() = application {
+fun main() = applicationSynchronous {
     configure {
         width = 800
         height = 800

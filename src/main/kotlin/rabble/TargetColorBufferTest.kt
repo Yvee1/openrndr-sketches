@@ -1,4 +1,4 @@
-import org.openrndr.application
+import org.openrndr.applicationSynchronous
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.isolated
 import org.openrndr.draw.isolatedWithTarget
@@ -9,7 +9,7 @@ import org.openrndr.extra.olive.oliveProgram
 import java.io.File
 import kotlin.math.*
 
-fun main() = application {
+fun main() = applicationSynchronous {
     configure {
         width = 1000
         height = 1000
