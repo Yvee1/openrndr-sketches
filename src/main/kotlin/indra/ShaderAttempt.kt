@@ -110,7 +110,9 @@ fun main() = applicationSynchronous {
         }
         extend(GitArchiver())
         if (!RECORD) {
-            extend(Screenshots())
+            extend(Screenshots()){
+                multisample = BufferMultisample.SampleCount(512)
+            }
             extend(gui)
         } else {
         extend(ScreenRecorder()){
