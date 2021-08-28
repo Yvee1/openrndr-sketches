@@ -24,16 +24,15 @@ import org.openrndr.math.Spherical
 import org.openrndr.math.Vector3
 import kotlin.math.*
 
-private const val RECORD = false
+//private const val RECORD = false
 fun main() = applicationSynchronous {
     configure {
         multisample = WindowMultisample.SampleCount(512)
-//        windowResizable = true
-        width = 1000
-        height = 1000
+        windowResizable = true
     }
 
-    program {
+    oliveProgram {
+        val RECORD = false
         val s = object {
             @DoubleParameter("Translation", -5.0, 5.0)
             var translation = 0.0
@@ -41,14 +40,8 @@ fun main() = applicationSynchronous {
             @DoubleParameter("Duration", 0.5, 10.0)
             var duration = 5.0
 
-            @DoubleParameter("Easing parameter", 1.0, 5.0)
-            var k = 2.8
-
-            @DoubleParameter("FOV", 0.0, 180.0)
-            var fov = 90.0
-
-            @BooleanParameter("Animate")
-            var animate = true
+            @BooleanParameter("Show Riemann sphere")
+            var showSphere = true
         }
         val gui = GUI()
         gui.add(s)
@@ -58,7 +51,9 @@ fun main() = applicationSynchronous {
 
         val preamble =  """
                     #define PI 3.14159265359
-            
+                    #define cx_mul(a, b) vec2(a.x*b.x-a.y*b.y, a.x*b.y+a.y*b.x)
+                    #define cx_div(a, b) vec2(((a.x*b.x+a.y*b.y)/(b.x*b.x+b.y*b.y)),((a.y*b.x-a.x*b.y)/(b.x*b.x+b.y*b.y)))
+                    
                     float aastep(float threshold, float value) {
                       #ifdef GL_OES_standard_derivatives
                         float afwidth = clamp(length(vec2(dFdx(value), dFdy(value))) * 0.70710678118654757, 0.0, 0.5);
@@ -86,15 +81,16 @@ fun main() = applicationSynchronous {
                 """.trimIndent()
 
         val render = """
+            complexPos = cx_div(vec2(1.0, 0.0), complexPos); 
             float intensity = 0.0;
-//            intensity += 1.0 - aastep(-0.75 + p_translation, complexPos.x);
-//            intensity += aastep(0.75 + p_translation, complexPos.x);
+            intensity += 1.0 - aastep(-0.75 + p_translation, complexPos.x);
+            intensity += aastep(0.75 + p_translation, complexPos.x);
             float strokeWidth = 0.02;
-            float loc = 0.4;
+            float loc = 0.5;
             intensity += (1 - aastep(loc + strokeWidth, fract(complexPos.y))) * aastep(loc, fract(complexPos.y));
-            float arrowWidth = 0.1;
-            float arrowHeight = 0.4;
-            intensity += 1 - aastep(0.0, sdTriangleIsosceles(rotate2d(-PI/2) * vec2(complexPos.x, fract(complexPos.y)) - vec2(loc+strokeWidth, 1.0 + p_translation), vec2(arrowWidth, arrowHeight)));
+            float arrowWidth = 0.05;
+            float arrowHeight = 0.2;
+            intensity += 1 - aastep(0.0, sdTriangleIsosceles(rotate2d(PI/2) * vec2(complexPos.x, fract(complexPos.y)) - vec2(loc+strokeWidth/2, -arrowHeight/2.0 - p_translation), vec2(arrowWidth, arrowHeight)));
             vec3 color = vec3(intensity); 
                 
             x_fill = vec4(color, 1.0);
@@ -102,9 +98,7 @@ fun main() = applicationSynchronous {
 
         val cam = Orbital()
         extend(cam) {
-//            eye = Vector3.UNIT_X * 2.0
-//            eye = Vector3(x=1.730467138510836, y=1.0026740264371863, z=0.011326042661080268)
-            eye = Vector3(x = sqrt(3.0), y = 1.0, z = 0.0)
+            eye = Vector3.UNIT_X * 2.0
             near = 0.001
         }
         extend(GitArchiver())
@@ -130,25 +124,7 @@ fun main() = applicationSynchronous {
 //        }
     }
 
-        val oldPhi = cam.camera.spherical.phi
-        val oldTheta = cam.camera.spherical.theta
-
-        fun easingK(x: Double, k: Double) = if (x < 0.5) 2.0.pow(k-1)*x.pow(k) else 1 - (-2 * x + 2).pow(k) / 2
-        fun easing(x: Double) = easingK(x, s.k)
-//        fun easing(x: Double) = Easing.CubicInOut.easer.ease(x, 0.0, 1.0, 1.0)
-
         extend {
-            cam.camera.fov = s.fov
-
-            if (s.animate) {
-                val t = easing((seconds / s.duration) % 1)
-                val imp = (sin(t * 2 * PI) + 0.5 * sin(t * 3 * PI)) * 1.5
-//            val imp = sin(t * 2 * PI) + 0.5*sin(t * 4 * PI) + 0.25*cos(t * 4 * PI) - 0.25
-                val pos = Spherical(oldTheta + t * 360.0, oldPhi + imp * 10.0, cam.camera.spherical.radius)
-                cam.camera.setView(cam.camera.lookAt, pos, cam.camera.fov)
-            }
-
-//            print(cam.camera.spherical.cartesian.toString() + "\r")
             val planeShadeStyle = shadeStyle {
                 fragmentPreamble = preamble
                 fragmentTransform = """
@@ -171,7 +147,8 @@ fun main() = applicationSynchronous {
                 clear(ColorRGBa.BLACK)
                 shadeStyle = planeShadeStyle
                 vertexBuffer(plane, DrawPrimitive.TRIANGLES)
-                isolated {
+
+                if (s.showSphere) isolated {
                     shadeStyle = sphereShadeStyle
                     translate(0.0, 0.5, 0.0)
                     vertexBuffer(sphere, DrawPrimitive.TRIANGLES)
