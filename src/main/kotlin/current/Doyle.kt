@@ -11,6 +11,7 @@ import org.openrndr.extra.compositor.compose
 import org.openrndr.extra.compositor.draw
 import org.openrndr.extra.compositor.layer
 import org.openrndr.extra.compositor.mask
+import org.openrndr.extra.gitarchiver.GitArchiver
 import org.openrndr.extra.gui.GUI
 import org.openrndr.extra.noise.random
 import org.openrndr.extra.olive.oliveProgram
@@ -245,9 +246,9 @@ fun main() = application {
         val font = loadFont("data/fonts/default.otf", 18.0)
         val RECORD = false
 
-//
-
-        extend(NativeGitArchiver())
+        extend(GitArchiver()){
+            autoCommitMessage = "testing normal git archiver"
+        }
         if(RECORD) {
             extend(ScreenRecorder()) {
                 profile = GIFProfile()
