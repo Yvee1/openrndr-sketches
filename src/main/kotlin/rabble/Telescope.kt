@@ -1,5 +1,5 @@
 import org.openrndr.Fullscreen
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.color.ColorXSVa
 import org.openrndr.extra.compositor.*
@@ -19,7 +19,7 @@ import kotlin.math.*
  *  Copy of an early version of Annulus.kt
  */
 
-fun main() = applicationSynchronous {
+fun main() = application {
     val w = 1000
     val h = 1000
 

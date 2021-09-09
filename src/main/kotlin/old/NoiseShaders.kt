@@ -1,12 +1,12 @@
 import org.intellij.lang.annotations.Language
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.draw.shadeStyle
 import org.openrndr.extra.olive.oliveProgram
 import org.openrndr.extra.videoprofiles.GIFProfile
 import org.openrndr.ffmpeg.ScreenRecorder
 import org.openrndr.extra.glslify.preprocessGlslify
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 800
         height = 800

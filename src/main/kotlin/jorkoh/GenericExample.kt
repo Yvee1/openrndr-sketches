@@ -1,13 +1,13 @@
 import inverse_kinematics.Joint
 import inverse_kinematics.Skeleton
 import inverse_kinematics.toRadians
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.math.Vector2
 import kotlin.math.cos
 import kotlin.math.sin
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 1366
         height = 768

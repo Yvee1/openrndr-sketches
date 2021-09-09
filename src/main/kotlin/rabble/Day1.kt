@@ -2,7 +2,7 @@ package genuary
 
 import org.openrndr.animatable.Animatable
 import org.openrndr.animatable.easing.Easing
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.color.ColorXSVa
 import org.openrndr.color.Linearity
@@ -36,7 +36,7 @@ import kotlin.math.*
 import org.openrndr.extra.palette.PaletteStudio
 import org.openrndr.extra.videoprofiles.GIFProfile
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 1000
         height = 1000

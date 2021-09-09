@@ -1,4 +1,4 @@
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.extra.noise.Random.gaussian
 import org.openrndr.extra.noise.simplex
@@ -17,7 +17,7 @@ import kotlin.math.cos
 import kotlin.math.round
 import kotlin.math.sin
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 800
         height = 800

@@ -1,13 +1,13 @@
 package useful
 
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.draw.isolatedWithTarget
 import org.openrndr.draw.loadImage
 import org.openrndr.draw.renderTarget
 import java.io.File
 import kotlin.math.abs
 
-fun main() = applicationSynchronous {
+fun main() = application {
     program {
         val w = 200
         val h = 200

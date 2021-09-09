@@ -1,4 +1,4 @@
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.*
 import org.openrndr.extras.meshgenerators.boxMesh
@@ -13,7 +13,7 @@ import org.openrndr.shape.IntRectangle
 import org.openrndr.shape.Rectangle
 
 fun main() {
-    applicationSynchronous {
+    application {
         configure {
             width = 640
             height = 640

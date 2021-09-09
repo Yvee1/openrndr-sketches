@@ -1,4 +1,4 @@
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.loadFont
 import org.openrndr.draw.loadImage
@@ -18,7 +18,7 @@ import kotlin.math.sin
  * I copied the code from there
  */
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 1000
         height = 1000

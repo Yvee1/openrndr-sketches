@@ -1,9 +1,9 @@
 import gecko.World
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.math.Vector2
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = World.WIDTH.toInt()
         height = World.HEIGHT.toInt()

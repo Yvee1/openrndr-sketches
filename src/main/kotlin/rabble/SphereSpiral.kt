@@ -3,7 +3,7 @@ package indra
 import org.openrndr.WindowMultisample
 import org.openrndr.animatable.Animatable
 import org.openrndr.animatable.easing.Easing
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.BufferMultisample
 import org.openrndr.draw.DrawPrimitive
@@ -35,7 +35,7 @@ import org.openrndr.extra.shapes.drawers.bezierPatch
 
 
 private const val RECORD = false
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 1000
         height = 1000

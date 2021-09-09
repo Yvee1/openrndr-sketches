@@ -1,6 +1,6 @@
 import org.openrndr.animatable.Animatable
 import org.openrndr.animatable.easing.Easing
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.extensions.Screenshots
 import org.openrndr.extra.compositor.*
@@ -26,7 +26,7 @@ import kotlin.math.*
 const private val RECORD = true
 const private val GIF = true
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 1000
         height = 1000

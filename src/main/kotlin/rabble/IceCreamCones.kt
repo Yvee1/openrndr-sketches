@@ -1,5 +1,5 @@
 import org.openrndr.animatable.Animatable
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorHSVa
 import org.openrndr.color.ColorRGBa
 import org.openrndr.color.hsv
@@ -20,7 +20,7 @@ import org.openrndr.shape.contour
 import kotlin.math.PI
 import org.openrndr.extra.videoprofiles.GIFProfile
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 1000
         height = 1000

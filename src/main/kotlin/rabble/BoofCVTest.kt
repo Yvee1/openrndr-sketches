@@ -5,7 +5,7 @@ import boofcv.factory.feature.detect.edge.FactoryEdgeDetectors
 import boofcv.struct.ConnectRule
 import boofcv.struct.image.GrayS16
 import boofcv.struct.image.GrayU8
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.boofcv.binding.toGrayF32
 import org.openrndr.boofcv.binding.toGrayU8
 import org.openrndr.boofcv.binding.toShapeContours
@@ -24,7 +24,7 @@ import org.openrndr.math.Vector2
 import org.openrndr.shape.*
 
 fun main() {
-    applicationSynchronous {
+    application {
         configure {
             width = 640
             height = 480

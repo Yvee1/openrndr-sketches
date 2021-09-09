@@ -1,4 +1,4 @@
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.isolated
 import org.openrndr.extra.olive.oliveProgram
@@ -8,7 +8,7 @@ import org.openrndr.svg.loadSVG
 import useful.LatexText
 import kotlin.math.log
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 800
         height = 800

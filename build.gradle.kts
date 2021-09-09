@@ -161,12 +161,13 @@ fun DependencyHandler.orxNatives(module: String): Any {
 }
 
 dependencies {
+    implementation("org.eclipse.jgit:org.eclipse.jgit:5.12.0.202106070339-r")
     /*  This is where you add additional (third-party) dependencies */
     // For LaTeX
 //    implementation("org.scilab.forge:jlatexmath:1.0.7")
 //    implementation("org.apache.xmlgraphics:batik:1.13")
     implementation("org.scilab.forge:jlatexmath:1.0.7")
-    implementation("com.guicedee.services:org.apache.fop:1.1.0.7-jre15")
+    implementation("com.guicedee.services:org.apache.fop:1.1.1.9-jre16")
     implementation("org.apache.xmlgraphics:batik:1.13")
 
     // For complex number math

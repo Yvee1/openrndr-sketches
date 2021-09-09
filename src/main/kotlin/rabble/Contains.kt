@@ -1,4 +1,4 @@
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.math.Matrix44
 import org.openrndr.math.Vector2
@@ -7,7 +7,7 @@ import org.openrndr.math.transforms.translate
 import org.openrndr.shape.Rectangle
 import org.openrndr.svg.loadSVG
 
-fun main() = applicationSynchronous {
+fun main() = application {
     program {
 //        val butterfly = loadSVG("data/images/butterfly.svg").findShapes()[0].effectiveShape.transform(Matrix44.scale(0.25, 0.25, 1.0)*Matrix44.translate(300.0, 500.0, 0.0))
 //        val square = Rectangle.fromCenter(Vector2(0.75*width, height/2.0), 100.0).shape

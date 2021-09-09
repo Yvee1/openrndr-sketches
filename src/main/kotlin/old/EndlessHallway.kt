@@ -1,4 +1,4 @@
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.BlendMode
 import org.openrndr.draw.Drawer
@@ -30,7 +30,7 @@ import kotlin.math.ln
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 800
         height = 800

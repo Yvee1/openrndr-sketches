@@ -1,7 +1,7 @@
 package indra
 
 import org.openrndr.WindowMultisample
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.DrawPrimitive
 import org.openrndr.draw.DrawQuality
@@ -20,7 +20,7 @@ import useful.FPSDisplay
 import useful.complexToSphere
 import useful.toComplex
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         windowResizable = true
         multisample = WindowMultisample.SampleCount(8)

@@ -1,4 +1,4 @@
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.extra.noise.uniform
@@ -174,7 +174,7 @@ class QuadTree<T>(val boundary: Rectangle, val capacity: Int, val mapper: (T) ->
 }
 
 fun main(){
-    applicationSynchronous {
+    application {
         configure {
             width = 800
             height = 800

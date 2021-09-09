@@ -1,6 +1,6 @@
 import org.openrndr.animatable.Animatable
 import org.openrndr.animatable.easing.Easing
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.color.ColorXSVa
 import org.openrndr.draw.Drawer
@@ -29,7 +29,7 @@ import org.openrndr.shape.ShapeContour
 import org.openrndr.shape.ShapeContour.Companion.fromPoints
 import kotlin.math.*
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 800
         height = 800

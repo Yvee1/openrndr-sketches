@@ -1,4 +1,4 @@
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.extra.noise.poissonDiskSampling
 import org.openrndr.extra.olive.oliveProgram
@@ -10,7 +10,7 @@ import org.openrndr.shape.Circle
 import org.openrndr.shape.Shape
 import org.openrndr.svg.loadSVG
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 800
         height = 800

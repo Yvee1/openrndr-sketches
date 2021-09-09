@@ -2,7 +2,7 @@ package indra
 
 import org.openrndr.animatable.Animatable
 import org.openrndr.animatable.easing.Easing
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.draw.isolated
@@ -28,7 +28,7 @@ import kotlin.math.sqrt
 private const val ratioMax = 6.46410161514
 private const val RECORD = true
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         windowResizable = true
         width = 200

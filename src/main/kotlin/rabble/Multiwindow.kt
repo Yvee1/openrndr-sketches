@@ -1,12 +1,12 @@
 package current
 
 import org.openrndr.application
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.math.Vector2
 import kotlin.concurrent.thread
 
-fun main() = applicationSynchronous {
+fun main() = application {
     program {
         var position = Vector2.ZERO
         val bgColor = ColorRGBa.fromHex("#ece6e2")
@@ -22,7 +22,7 @@ fun main() = applicationSynchronous {
         }
 
         thread {
-            applicationSynchronous {
+            application {
                 program {
                     extend {
                         if (frameCount % 120 == 0) {

@@ -2,7 +2,7 @@ package indra
 
 import org.openrndr.WindowMultisample
 import org.openrndr.animatable.easing.Easing
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.BufferMultisample
 import org.openrndr.draw.DrawPrimitive
@@ -25,7 +25,7 @@ import org.openrndr.math.Vector3
 import kotlin.math.*
 
 private const val RECORD = false
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         multisample = WindowMultisample.SampleCount(512)
 //        windowResizable = true

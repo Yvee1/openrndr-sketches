@@ -412,7 +412,7 @@ const val nStates = 50
 const val general = 9
 const val nSteps = 2 * nStates - 2 - (general - 1)
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 800
         height = 800
@@ -516,7 +516,7 @@ fun main() = applicationSynchronous {
         }
 
         thread {
-            applicationSynchronous {
+            application {
                 configure {
                     width = 200
                 }

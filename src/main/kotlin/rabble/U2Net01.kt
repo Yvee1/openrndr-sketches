@@ -1,4 +1,4 @@
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.colorBuffer
 import org.openrndr.draw.grayscale
@@ -10,7 +10,7 @@ import org.openrndr.orml.u2net.U2Net
 import org.openrndr.shape.IntRectangle
 
 fun main() {
-    applicationSynchronous {
+    application {
         configure {
             width = 1280
             height = 480

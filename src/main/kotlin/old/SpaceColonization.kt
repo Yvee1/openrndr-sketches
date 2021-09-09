@@ -1,4 +1,4 @@
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.extra.noise.uniforms
@@ -182,7 +182,7 @@ class Network(val pos: Vector2, val dir: Vector2, val bounds: Rectangle, val att
     }
 }
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 800
         height = 800

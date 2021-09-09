@@ -38,6 +38,7 @@ class FPSDisplay : Extension {
             // -- set view and projections
             view = Matrix44.IDENTITY
             ortho()
+            shadeStyle = null
 
             fill = textColor
             text("fps: ${avg.toInt()}", 0.0, 15.0)

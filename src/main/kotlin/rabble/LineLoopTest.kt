@@ -1,13 +1,13 @@
 package current
 
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.DrawQuality
 import org.openrndr.extensions.Screenshots
 import org.openrndr.math.Vector2
 import org.openrndr.math.Vector3
 
-fun main() = applicationSynchronous {
+fun main() = application {
     program {
         extend(Screenshots())
         extend {

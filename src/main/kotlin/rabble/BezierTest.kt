@@ -1,6 +1,6 @@
 package current
 
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.extra.shapes.bezierPatch
 import org.openrndr.extra.shapes.drawers.bezierPatch
@@ -9,7 +9,7 @@ import org.openrndr.math.Vector3
 import org.openrndr.shape.LineSegment
 import org.openrndr.shape.contour
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 800
         height = 800

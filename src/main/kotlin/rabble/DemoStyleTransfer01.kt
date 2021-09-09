@@ -1,4 +1,4 @@
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.draw.colorBuffer
 import org.openrndr.draw.loadImage
 import org.openrndr.ffmpeg.VideoPlayerFFMPEG
@@ -7,7 +7,7 @@ import org.openrndr.orml.styletransfer.StyleEncoder
 import org.openrndr.orml.styletransfer.StyleTransformer
 import org.openrndr.shape.IntRectangle
 
-fun main() = applicationSynchronous {
+fun main() = application {
     program {
         val encoder = StyleEncoder.load()
         val transformer = StyleTransformer.loadSeparable()

@@ -1,6 +1,6 @@
 package current
 
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.extra.compositor.compose
 import org.openrndr.extra.compositor.draw
@@ -29,7 +29,7 @@ private fun Joint.draw(drawer: Drawer) {
     attachedJoints.forEach { it.draw(drawer) }
 }
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = World.WIDTH.toInt()
         height = World.HEIGHT.toInt()

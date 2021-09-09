@@ -1,4 +1,4 @@
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.BlendMode
 import org.openrndr.draw.isolatedWithTarget
@@ -11,7 +11,7 @@ import kotlin.math.sin
 import org.openrndr.extra.olive.oliveProgram
 import org.openrndr.ffmpeg.ScreenRecorder
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 800
         height = 800

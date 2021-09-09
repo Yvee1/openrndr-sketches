@@ -1,7 +1,7 @@
 package current
 
 import inverse_kinematics.toDegrees
-import org.openrndr.applicationSynchronous
+import org.openrndr.application
 import org.openrndr.color.ColorHSVa
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.loadFont
@@ -23,11 +23,12 @@ import org.openrndr.ffmpeg.ScreenRecorder
 import org.openrndr.math.Vector2
 import org.openrndr.shape.Circle
 import useful.FPSDisplay
+import useful.NativeGitArchiver
 import kotlin.math.*
 
 // see https://bl.ocks.org/robinhouston/6096562
 
-fun main() = applicationSynchronous {
+fun main() = application {
     configure {
         width = 1000
         height = 1000
@@ -246,6 +247,7 @@ fun main() = applicationSynchronous {
 
 //
 
+        extend(NativeGitArchiver())
         if(RECORD) {
             extend(ScreenRecorder()) {
                 profile = GIFProfile()
