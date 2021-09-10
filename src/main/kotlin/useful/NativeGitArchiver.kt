@@ -21,11 +21,13 @@ class NativeGitArchiver : Extension {
     private val dir = File(".")
 
     fun commitChanges() {
-        if ("git status --porcelain".runCommand(dir)!!.isNotBlank()){
+        if ("git status --porcelain".runCommand(dir)!!.first.isNotBlank()){
             logger.info { File(".").absolutePath }
             logger.info { "Performing: " + "git add . && git commit -m \"${autoCommitMessage}\"" }
-            val output = "git add . && git commit -m \"${autoCommitMessage}\"".runCommand(dir)
-            logger.info { output }
+            val gitAddOutput = "git add .".runCommand(dir)
+            val gitCommitOutput = "git commit -m \"${autoCommitMessage}\"".runCommand(dir)
+            logger.info { gitAddOutput }
+            logger.info { gitCommitOutput }
             logger.info {  "git repository is now at ${commitHash}" }
         } else {
             logger.info { "no changes" }
@@ -38,7 +40,7 @@ class NativeGitArchiver : Extension {
 
     val commitHash: String
         get() {
-            return "git rev-parse --short HEAD".runCommand(dir)!!
+            return "git rev-parse --short HEAD".runCommand(dir)!!.first
         }
 
     override fun setup(program: Program) {
@@ -66,7 +68,7 @@ class NativeGitArchiver : Extension {
     }
 }
 
-fun String.runCommand(workingDir: File): String? {
+fun String.runCommand(workingDir: File): Pair<String, String>? {
     try {
         val parts = this.split("\\s".toRegex())
         val proc = ProcessBuilder(*parts.toTypedArray())
@@ -76,7 +78,7 @@ fun String.runCommand(workingDir: File): String? {
             .start()
 
         proc.waitFor(60, TimeUnit.MINUTES)
-        return proc.inputStream.bufferedReader().readText()
+        return Pair(proc.inputStream.bufferedReader().readText(), proc.errorStream.bufferedReader().readText())
     } catch(e: IOException) {
         e.printStackTrace()
         return null
