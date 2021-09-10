@@ -22,7 +22,10 @@ class NativeGitArchiver : Extension {
 
     fun commitChanges() {
         if ("git status --porcelain".runCommand(dir)!!.isNotBlank()){
-            "git add . && git commit -m \"${autoCommitMessage}\"".runCommand(dir)
+            logger.info { File(".").absolutePath }
+            logger.info { "Performing: " + "git add . && git commit -m \"${autoCommitMessage}\"" }
+            val output = "git add . && git commit -m \"${autoCommitMessage}\"".runCommand(dir)
+            logger.info { output }
             logger.info {  "git repository is now at ${commitHash}" }
         } else {
             logger.info { "no changes" }

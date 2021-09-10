@@ -246,8 +246,8 @@ fun main() = application {
         val font = loadFont("data/fonts/default.otf", 18.0)
         val RECORD = false
 
-        extend(GitArchiver()){
-            autoCommitMessage = "testing normal git archiver"
+        extend(NativeGitArchiver()){
+            autoCommitMessage = "testing native git archiver"
         }
         if(RECORD) {
             extend(ScreenRecorder()) {
