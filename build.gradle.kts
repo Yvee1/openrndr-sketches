@@ -172,6 +172,7 @@ dependencies {
 
     // For complex number math
     implementation("space.kscience:kmath-complex:0.3.0-dev-8")
+    implementation("space.kscience:kmath-core:0.3.0-dev-8")
 
 //    implementation("org.jsoup:jsoup:1.12.2")
 //    implementation("com.google.code.gson:gson:2.8.6")
@@ -246,6 +247,7 @@ configure<JavaPluginConvention> {
 }
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "16"
+    kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=all")
 }
 
 

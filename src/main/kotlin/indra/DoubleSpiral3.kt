@@ -62,7 +62,7 @@ fun main() = application {
         fun THat(z: Complex, k: Complex): Complex {
             return ComplexField {
                 val denom = (z * (k - 1) + 1 + k)
-                val denomLength = denom.r2()
+                val denomLength = denom.r2
                 if (denomLength < 0.0001 || denomLength > 1000000) Complex(0, 0) else (z * (1 + k) + k - 1) / denom
             }
         }

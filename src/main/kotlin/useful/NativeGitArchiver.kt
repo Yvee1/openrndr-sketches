@@ -21,14 +21,15 @@ class NativeGitArchiver : Extension {
     private val dir = File(".")
 
     fun commitChanges() {
-        if ("git status --porcelain".runCommand(dir)!!.first.isNotBlank()){
-            logger.info { File(".").absolutePath }
-            logger.info { "Performing: " + "git add . && git commit -m \"${autoCommitMessage}\"" }
-            val gitAddOutput = "git add .".runCommand(dir)
-            val gitCommitOutput = "git commit -m \"${autoCommitMessage}\"".runCommand(dir)
-            logger.info { gitAddOutput }
-            logger.info { gitCommitOutput }
-            logger.info {  "git repository is now at ${commitHash}" }
+        val gitStatus = "git status --porcelain".runCommand(dir)!!
+        if (gitStatus.first.isNotBlank()){
+            if (gitStatus.first.contains("Not a git repository")){
+                logger.error { "Can't commit changes because the working directory is not a git repository" }
+            } else {
+                "git add .".runCommand(dir)
+                "git commit -m \"${autoCommitMessage}\"".runCommand(dir)
+                logger.info { "git repository is now at ${commitHash}" }
+            }
         } else {
             logger.info { "no changes" }
         }
