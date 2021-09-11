@@ -3,9 +3,13 @@ package current
 import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
+import org.openrndr.draw.RectangleBatch
+import org.openrndr.draw.RectangleBatchBuilder
+import org.openrndr.draw.rectangleBatch
 import org.openrndr.extensions.Screenshots
 import org.openrndr.math.Vector2
 import org.openrndr.shape.LineSegment
+import org.openrndr.shape.Rectangle
 import useful.NativeGitArchiver
 import kotlin.math.max
 import kotlin.math.min
@@ -116,6 +120,26 @@ fun main() {
                 }
             }
 
+            fun drawDPTable(table: Array<Array<Double>>, pos: Vector2, size: Double){
+                val n = gamma.size
+                val m = gamma[0].size
+
+                val cellSize = size / max(n, m)
+                val largest: Double = table.map { it.maxOrNull()!! }.maxOrNull()!!
+
+                val rBatch = drawer.rectangleBatch {
+                    for (i in 0 until n) {
+                        for (j in 0 until m) {
+                            stroke = ColorRGBa.BLACK
+                            fill = ColorRGBa.BLACK.opacify(1.0-gamma[i][j]/largest)
+                            val r = Rectangle(i * cellSize + pos.x, j*cellSize + pos.y, cellSize, cellSize) as Rectangle
+                            rectangle(r)
+                        }
+                    }
+                }
+                drawer.rectangles(rBatch)
+            }
+
             extend(NativeGitArchiver())
             extend(Screenshots())
             extend {
@@ -123,12 +147,15 @@ fun main() {
                     clear(ColorRGBa.WHITE)
                     translate(width/2.0, height/2.0)
                     scale(100.0)
-                    translate(-2.5, 0.0)
+                    scale(1.0, -1.0)
+//                    translate(-2.5, 0.0)
                     strokeWeight /= 50.0
 
                     drawMapping(mapping)
                     drawPolyline(p)
                     drawPolyline(q)
+
+                    drawDPTable(gamma, Vector2(-5.0, -2.5), 5.0)
                 }
             }
         }
