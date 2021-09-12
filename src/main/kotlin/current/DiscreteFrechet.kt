@@ -8,6 +8,7 @@ import org.openrndr.extensions.Screenshots
 import org.openrndr.extra.olive.oliveProgram
 import org.openrndr.extras.color.presets.BLUE_STEEL
 import org.openrndr.extras.color.presets.ORANGE
+import org.openrndr.math.Matrix44
 import org.openrndr.math.Vector2
 import org.openrndr.shape.CompositionDrawer
 import org.openrndr.shape.LineSegment
@@ -182,6 +183,8 @@ fun main() {
     application {
         configure {
             windowResizable = true
+            width = 1200
+            height = 600
         }
 
         program {
@@ -397,8 +400,16 @@ fun main() {
 
             extend(NativeGitArchiver())
             extend(Screenshots())
-            extend(TransRotScale())
+            val trs = TransRotScale()
+            extend(trs){
+                viewMat = Matrix44(1.6105100000000008, 0.0, 0.0, -136.36322000000007,
+                    0.0, 1.6105100000000008, 0.0, -289.1144200000001,
+                    0.0, 0.0, 1.6105100000000008, 0.0,
+                    0.0, 0.0, 0.0, 1.0
+                )
+            }
             extend {
+//                println(trs.viewMat)
                 drawer.clear(ColorRGBa.WHITE)
                 drawer.composition(comp)
 //                drawer.apply {
