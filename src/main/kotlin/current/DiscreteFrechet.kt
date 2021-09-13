@@ -351,6 +351,8 @@ fun main() {
             }
 
             val comp = drawComposition {
+                strokeWeight *= 2
+
                 translate(width/2.0, height/2.0)
                 scale(100.0)
                 scale(1.0, -1.0)
