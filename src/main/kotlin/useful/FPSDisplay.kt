@@ -30,7 +30,6 @@ class FPSDisplay : Extension {
     override fun afterDraw(drawer: Drawer, program: Program) {
         frames++
 
-
         val delta = program.seconds - lastFrameDraw
         avg = avg * smoothing + ((1.0 / delta * (1.0 - smoothing)))
 

@@ -75,8 +75,8 @@ class LatexText {
 fun Drawer.text(text: LatexText, x: Double, y: Double){
     isolated {
         translate(x, y)
-//        composition(text.composition)
-        shapes(text.composition.findShapes().map { it.effectiveShape })
+        composition(text.composition)
+//        shapes(text.composition.findShapes().map { it.shape })
     }
 }
 

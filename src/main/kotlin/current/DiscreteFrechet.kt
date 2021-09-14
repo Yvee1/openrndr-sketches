@@ -14,11 +14,7 @@ import org.openrndr.shape.CompositionDrawer
 import org.openrndr.shape.LineSegment
 import org.openrndr.shape.Rectangle
 import org.openrndr.svg.saveToFile
-import useful.LatexText
-import useful.text
-import useful.NativeGitArchiver
-import useful.TransRotScale
-import useful.Viridis
+import useful.*
 import java.io.File
 import kotlin.math.max
 import kotlin.math.min
@@ -261,8 +257,29 @@ fun main() {
                     // Outer rectangle
                     contour(Rectangle(0.0, 0.0, w, h).contour)
 
+                    // Color bar
                     viridis.run {
                         drawColorBar(-(0.5 v2 0.0), 0.2, h)
+                    }
+
+                    strokeWeight /= 2
+                    contour(Rectangle(-0.5, 0.0, 0.2, h).contour)
+                    strokeWeight *= 2
+
+                    isolated {
+                        scale(1 / 100.0, -1 / 100.0)
+//                        strokeWeight *= 100.0
+//                        strokeWeight /= 3
+//                        lineSegment(-0.55*100.0, 0.0, -0.5*100.0, 0.0)
+//                        text(LatexText("$0$", 14.0f), -0.75*100.0, -12.0)
+//                        lineSegment(-0.55*100.0, -h*100.0, -0.5*100.0, -h*100.0)
+//                        text(LatexText("$${largest.format(1)}$", 14.0f), -0.85*100.0, -h*100.0-12.0)
+//
+//                        strokeWeight *= 3
+//                        strokeWeight /= 100.0
+
+                        text(LatexText("$0$", 14.0f), -0.70*100.0, -12.0)
+                        text(LatexText("$${largest.format(1)}$", 14.0f), -0.80*100.0, -h*100.0-12.0)
                     }
                 }
             }
@@ -316,7 +333,7 @@ fun main() {
                     contour(Rectangle(-0.5, 0.0, 0.2, h).contour)
                     strokeWeight *= 2
 
-                    text(LatexText("0", 14.0f), -0.6, 0.0)
+                    text(LatexText("0", 14.0f), -0.7, 0.0)
                 }
             }
 
@@ -420,6 +437,7 @@ fun main() {
 
             extend(NativeGitArchiver())
             extend(Screenshots())
+            extend(FPSDisplay())
             val trs = TransRotScale()
             extend(trs){
                 viewMat = Matrix44(1.6105100000000008, 0.0, 0.0, -136.36322000000007,
@@ -429,6 +447,7 @@ fun main() {
                 )
             }
             extend {
+                drawer.fontMap = loadFont("data/fonts/default.otf", 18.0)
 //                println(trs.viewMat)
                 drawer.clear(ColorRGBa.WHITE)
 //                drawer.composition(comp)
@@ -480,7 +499,7 @@ fun main() {
                     scale(100.0)
                     scale(1.0, -1.0)
 //                    translate(-2.5, 0.0)
-                    strokeWeight /= 50.0
+                    strokeWeight /= 100.0
 
                     isolated {
                         translate(0.0, -1.5)
