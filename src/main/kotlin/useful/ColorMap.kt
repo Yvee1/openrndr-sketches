@@ -2,6 +2,10 @@ package useful
 
 import org.openrndr.application
 import org.openrndr.color.ColorRGBa
+import org.openrndr.draw.Drawer
+import org.openrndr.draw.isolated
+import org.openrndr.math.Vector2
+import org.openrndr.shape.CompositionDrawer
 import java.io.File
 
 interface ColorMap {
@@ -9,6 +13,8 @@ interface ColorMap {
      * @param t Parameter between 0 and 1
      */
     fun getColor(t: Double): ColorRGBa
+    fun Drawer.drawColorBar(pos: Vector2, w: Double, h: Double)
+    fun CompositionDrawer.drawColorBar(pos: Vector2, w: Double, h: Double)
 }
 
 fun getFileColors(f: File) = f.readLines().map {
@@ -19,6 +25,28 @@ fun getFileColors(f: File) = f.readLines().map {
 abstract class ColorMapFile() : ColorMap {
     abstract val colors: List<ColorRGBa>
     override fun getColor(t: Double): ColorRGBa = colors[((t-0.00001) * colors.size).toInt()]
+    override fun Drawer.drawColorBar(pos: Vector2, w: Double, h: Double) {
+        isolated {
+            translate(pos)
+            stroke = null
+            val cellSize = h / 256
+            for (i in 0 until 256){
+                fill = getColor(i / 256.0)
+                rectangle(0.0, cellSize * i, w, cellSize)
+            }
+        }
+    }
+    override fun CompositionDrawer.drawColorBar(pos: Vector2, w: Double, h: Double) {
+        isolated {
+            translate(pos)
+            stroke = null
+            val cellSize = h / 256
+            for (i in 0 until 256){
+                fill = getColor(i / 256.0)
+                rectangle(0.0, cellSize * i, w, cellSize*1.5)
+            }
+        }
+    }
 }
 
 // Files from https://github.com/Jsalam/JViridis/

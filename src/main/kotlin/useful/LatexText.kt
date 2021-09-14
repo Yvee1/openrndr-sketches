@@ -7,6 +7,7 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.draw.isolated
 import org.openrndr.shape.Composition
+import org.openrndr.shape.CompositionDrawer
 import org.openrndr.svg.loadSVG
 import org.scilab.forge.jlatexmath.DefaultTeXFont
 import org.scilab.forge.jlatexmath.TeXConstants
@@ -74,6 +75,15 @@ class LatexText {
 fun Drawer.text(text: LatexText, x: Double, y: Double){
     isolated {
         translate(x, y)
-        composition(text.composition)
+//        composition(text.composition)
+        shapes(text.composition.findShapes().map { it.effectiveShape })
+    }
+}
+
+fun CompositionDrawer.text(text: LatexText, x: Double, y: Double){
+    isolated {
+        translate(x, y)
+//        composition(text.composition)
+        shapes(text.composition.findShapes().map { it.effectiveShape })
     }
 }

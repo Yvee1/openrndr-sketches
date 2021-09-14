@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.2" baseProfile="tiny" id="openrndr-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="480.0" width="640.0" y="0.0" x="0.0" ><g >
+<path stroke="000" fill="0ff0" d="M 320.0 240.0L420.0 240.0L420.0 340.0L320.0 340.0L320.0 240.0z"/>
+<path stroke="000" fill="0ff0" d="M 100.0 100.0L100.0 300.0L150.0 200.0"/>
+<path stroke="ffc0cb" fill="0ff0" d="M 150.0 200.0L320.0 240.0"/>
+</g>
+</svg>

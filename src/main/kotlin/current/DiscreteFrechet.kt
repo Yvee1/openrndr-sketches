@@ -14,6 +14,8 @@ import org.openrndr.shape.CompositionDrawer
 import org.openrndr.shape.LineSegment
 import org.openrndr.shape.Rectangle
 import org.openrndr.svg.saveToFile
+import useful.LatexText
+import useful.text
 import useful.NativeGitArchiver
 import useful.TransRotScale
 import useful.Viridis
@@ -258,6 +260,10 @@ fun main() {
 
                     // Outer rectangle
                     contour(Rectangle(0.0, 0.0, w, h).contour)
+
+                    viridis.run {
+                        drawColorBar(-(0.5 v2 0.0), 0.2, h)
+                    }
                 }
             }
 
@@ -300,6 +306,17 @@ fun main() {
 
                     // Outer rectangle
                     contour(Rectangle(0.0, 0.0, w, h).contour)
+
+                    // Color bar
+                    viridis.run {
+                        drawColorBar(-(0.5 v2 0.0), 0.2, h)
+                    }
+
+                    strokeWeight /= 2
+                    contour(Rectangle(-0.5, 0.0, 0.2, h).contour)
+                    strokeWeight *= 2
+
+                    text(LatexText("0", 14.0f), -0.6, 0.0)
                 }
             }
 
@@ -374,6 +391,7 @@ fun main() {
                 val pos = Vector2(-5.0, -2.0)
                 val size = 5.0
                 drawDPTable(gamma, pos, size)
+
                 isolated {
                     stroke = ColorRGBa.fromHex("E7ECEF")
                     translate(0.0, -0.01)
@@ -398,7 +416,7 @@ fun main() {
                     drawPolyline(q)
                 }
             }
-            comp.saveToFile(File("teeeeeeesssssttttt.svg"))
+//            comp.saveToFile(File("teeeeeeesssssttttt.svg"))
 
             extend(NativeGitArchiver())
             extend(Screenshots())
@@ -413,7 +431,7 @@ fun main() {
             extend {
 //                println(trs.viewMat)
                 drawer.clear(ColorRGBa.WHITE)
-                drawer.composition(comp)
+//                drawer.composition(comp)
 //                drawer.apply {
 //                    clear(ColorRGBa.WHITE)
 //                    translate(width/2.0, height/2.0)
@@ -455,6 +473,55 @@ fun main() {
 //                    stroke = ColorRGBa.BLUE_STEEL
 //                    drawPolyline(q)
 //                }
+                drawer.apply {
+                    strokeWeight *= 2
+
+                    translate(width/2.0, height/2.0)
+                    scale(100.0)
+                    scale(1.0, -1.0)
+//                    translate(-2.5, 0.0)
+                    strokeWeight /= 50.0
+
+                    isolated {
+                        translate(0.0, -1.5)
+                        strokeWeight /= 2.0
+                        drawMapping(mapping, p, q)
+                        strokeWeight *= 2.0
+                        stroke = ColorRGBa.BLACK
+//                    stroke = ColorRGBa.ORANGE
+                        drawPolyline(p)
+//                    stroke = ColorRGBa.BLUE_STEEL
+                        drawPolyline(q)
+                    }
+
+                    val pos = Vector2(-5.0, -2.0)
+                    val size = 5.0
+                    drawDPTable(gamma, pos, size)
+
+                    isolated {
+                        stroke = ColorRGBa.fromHex("E7ECEF")
+                        translate(0.0, -0.01)
+                        drawDPPath(gamma, pos, size, mapping)
+                    }
+                    isolated {
+//                        stroke = ColorRGBa.fromHex("390040")
+                        stroke = ColorRGBa.fromHex("FF8811")
+                        translate(0.0, 0.01)
+                        drawDPPath(gamma, pos, size, mappingLimited)
+                    }
+
+                    isolated {
+                        translate(0.0, 0.25)
+                        strokeWeight /= 2.0
+                        drawMapping(mappingLimited, p, q)
+                        strokeWeight *= 2.0
+                        stroke = ColorRGBa.BLACK
+//                    stroke = ColorRGBa.ORANGE
+                        drawPolyline(p)
+//                    stroke = ColorRGBa.BLUE_STEEL
+                        drawPolyline(q)
+                    }
+                }
             }
         }
     }
