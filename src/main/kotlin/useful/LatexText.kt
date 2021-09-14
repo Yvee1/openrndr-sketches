@@ -27,7 +27,7 @@ class LatexText {
     val composition: Composition
 
     @Throws(IOException::class)
-    constructor(latex: String?, size: Float) {
+    constructor(latex: String?, size: Double) {
         // Make file name the SHA-256 hash of the latex string + the size
         val bytes = (latex + size.toString()).toByteArray()
         val md = MessageDigest.getInstance("SHA-256")
@@ -50,7 +50,7 @@ class LatexText {
             DefaultTeXFont.registerAlphabet(CyrillicRegistration())
             DefaultTeXFont.registerAlphabet(GreekRegistration())
             val formula = TeXFormula(latex)
-            val icon = formula.createTeXIcon(TeXConstants.STYLE_DISPLAY, size)
+            val icon = formula.createTeXIcon(TeXConstants.STYLE_DISPLAY, size.toFloat())
             icon.insets = Insets(5, 5, 5, 5)
             g2.svgCanvasSize = Dimension(icon.iconWidth, icon.iconHeight
             )

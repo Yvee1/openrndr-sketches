@@ -489,7 +489,7 @@ fun main() = application {
                     circle(x, height/2.0, 10.0)
 
                     fill = ColorRGBa.BLACK
-                    text(LatexText(epoch[i].name, 12.0f),x - 5.0, height/2.0 - 40.0)
+                    text(LatexText(epoch[i].name, 12.0),x - 5.0, height/2.0 - 40.0)
                 }
             }
         }
@@ -546,7 +546,7 @@ fun main() = application {
             drawer.fill = ColorRGBa.BLACK
             drawer.fontMap = largeFont
             drawer.text(settings.currentEpoch.toString(), 10.0, 50.0)
-                drawer.text(LatexText("\$t = ${settings.currentEpoch}\$", 18.0f), width/2.0-10.0, height/2.0-150.0)
+                drawer.text(LatexText("\$t = ${settings.currentEpoch}\$", 18.0), width/2.0-10.0, height/2.0-150.0)
         }
     }
 }

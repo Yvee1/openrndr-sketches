@@ -17,7 +17,7 @@ fun main() = application {
     oliveProgram {
 //        toSVG("\\delta", "temp.svg", true)
 //        val svg = loadSVG("target/temp.svg")
-        val latexText = LatexText("\\delta", 10.0f)
+        val latexText = LatexText("\\delta", 10.0)
         val svg = latexText.composition
 //        val shape = svg.findShapes()[0]
 //        println(svg.findGroups().map {it.attributes})
