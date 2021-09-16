@@ -19,7 +19,7 @@ fun main() = application {
 
         extend(NativeGitArchiver())
         extend(Screenshots())
-//        extend(gui)
+        extend(gui)
         extend {
             drawer.circle(width/2.0, height/2.0, s.radius)
         }

@@ -41,7 +41,7 @@ class NativeGitArchiver : Extension {
 
     val commitHash: String
         get() {
-            return "git rev-parse --short HEAD".runCommand(dir)!!.first
+            return "git rev-parse --short HEAD".runCommand(dir)!!.first.trimEnd()
         }
 
     override fun setup(program: Program) {
