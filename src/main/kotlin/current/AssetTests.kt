@@ -5,6 +5,7 @@ import org.openrndr.extensions.Screenshots
 import org.openrndr.extra.gitarchiver.GitArchiver
 import org.openrndr.extra.gui.GUI
 import org.openrndr.extra.parameters.DoubleParameter
+import useful.NativeGitArchiver
 
 fun main() = application {
     program {
@@ -16,7 +17,7 @@ fun main() = application {
         val gui = GUI()
         gui.add(s)
 
-        extend(GitArchiver())
+        extend(NativeGitArchiver())
         extend(Screenshots())
         extend(gui)
         extend {
