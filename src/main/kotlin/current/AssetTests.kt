@@ -5,6 +5,7 @@ import org.openrndr.extensions.Screenshots
 import org.openrndr.extra.gitarchiver.GitArchiver
 import org.openrndr.extra.gui.GUI
 import org.openrndr.extra.parameters.DoubleParameter
+import org.openrndr.ffmpeg.ScreenRecorder
 import useful.NativeGitArchiver
 
 fun main() = application {
@@ -17,9 +18,14 @@ fun main() = application {
         val gui = GUI()
         gui.add(s)
 
-        extend(NativeGitArchiver())
+        extend(NativeGitArchiver()){
+            commitOnRun = true
+        }
         extend(Screenshots())
         extend(gui)
+        extend(ScreenRecorder()){
+            maximumDuration = 2.0
+        }
         extend {
             drawer.circle(width/2.0, height/2.0, s.radius)
         }
