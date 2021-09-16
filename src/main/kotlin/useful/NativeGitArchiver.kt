@@ -48,7 +48,7 @@ class NativeGitArchiver : Extension {
         val oldMetadataFunction = program.assetMetadata
         program.assetMetadata = {
             val oldMetadata = oldMetadataFunction()
-            val commitHash = this.commitHash.take(7)
+            val commitHash = this.commitHash
             program.assetProperties["git-commit-hash"] = commitHash
             AssetMetadata(
                 oldMetadata.programName,
