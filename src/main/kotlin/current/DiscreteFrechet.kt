@@ -5,6 +5,7 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.*
 import org.openrndr.drawComposition
 import org.openrndr.extensions.Screenshots
+import org.openrndr.extra.gitarchiver.GitArchiver
 import org.openrndr.extra.olive.oliveProgram
 import org.openrndr.extras.color.presets.BEIGE
 import org.openrndr.extras.color.presets.BLUE_STEEL
@@ -498,7 +499,7 @@ fun main() {
             }
             comp.saveToFile(File("teeeeeeesssssttttt.svg"))
 
-            extend(NativeGitArchiver())
+            extend(GitArchiver())
             extend(Screenshots())
             extend(FPSDisplay())
             val trs = TransRotScale()
